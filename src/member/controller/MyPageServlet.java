@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
-import member.model.vo.Member;
+import member.model.service.UserService;
+
+import member.model.vo.User;
 
 /**
  * Servlet implementation class MyPageServlet
@@ -36,16 +37,26 @@ public class MyPageServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		//2. view 에서 넘어온 데이터 저장
-		String memberId=request.getParameter("memberId");
+		String memberId=request.getParameter("userId");
 		System.out.println("memberId : "+memberId);
 		//3. 비즈니스 로직
 		System.out.println("mypage SERVLET 입장");
-		Member member=new MemberService().selectOneMember(memberId);
+		User member=new UserService().selectOneMember(memberId);
 		//4. 결과처리
+		System.out.println(member.getUserGrade());
+		if(member.getUserGrade()==0) {
+			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/user/mypage.jsp");
+			request.setAttribute("member", member);
+			rd.forward(request, response);
+		}else {
+			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/user/mypage1.jsp");
+			request.setAttribute("member", member);
+			rd.forward(request, response);
+		}
+	
+
+	
 		
-		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/member/mypage.jsp");
-		request.setAttribute("member", member);
-		rd.forward(request, response);
 	}
 
 	/**

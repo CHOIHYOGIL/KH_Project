@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
+import member.model.service.UserService;
 
 /**
  * Servlet implementation class ChangeAllLevelServlet
@@ -39,7 +39,7 @@ public class ChangeAllLevelServlet extends HttpServlet {
 		String level=request.getParameter("level");
 		
 		//3. 비즈니스 로직
-		 boolean result=new MemberService().changeAllLevel(num, level);
+		 boolean result=new UserService().changeAllLevel(num, level);
 		 
 		 //4. 결과처리
 		 

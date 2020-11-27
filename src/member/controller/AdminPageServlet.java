@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
-import member.model.vo.Member;
+
+import member.model.service.UserService;
+import member.model.vo.AdminPageData;
+import member.model.vo.User;
 
 /**
  * Servlet implementation class AdminPageServlet
@@ -37,13 +39,16 @@ public class AdminPageServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		
 		//2. view에서 넘어온 데이터 저장
+		int reqPage=Integer.parseInt(request.getParameter("reqPage"));
+		System.out.println(reqPage);
 		//3. 비즈니스 로직
-		ArrayList<Member> list=new MemberService().selectAllMember();
-		
+		ArrayList<User> list=new UserService().selectAllMember();
+		AdminPageData apd=new UserService().selectList(reqPage);
 		//4.결과처리
 		
 		RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/views/member/adminPage.jsp");
-		request.setAttribute("list", list);
+		request.setAttribute("list", apd.getList());
+		request.setAttribute("pageNavi", apd.getPageNavi());
 		rd.forward(request, response);
 		
 	}

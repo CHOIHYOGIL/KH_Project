@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
-import member.model.vo.Member;
+
+import member.model.service.UserService;
+
+import member.model.vo.User;
 
 /**
  * Servlet implementation class SearchKeywordServlet
@@ -40,9 +42,10 @@ public class SearchKeywordServlet extends HttpServlet {
 		String keyword=request.getParameter("keyword");
 		String type=request.getParameter("type");
 		
-		System.out.print("type : "+type);
+		System.out.println("type : "+type);
+		System.out.println("keyword : "+keyword);
 		//3. 비즈니스 로직
-		ArrayList<Member> list=new MemberService().searchKeyword(type,keyword);
+		ArrayList<User> list=new UserService().searchKeyword(type,keyword);
 		
 		RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/views/member/adminPage.jsp");
 		request.setAttribute("list", list);

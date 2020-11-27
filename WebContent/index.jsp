@@ -1,20 +1,62 @@
+<%@page import="member.model.vo.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>selcar에 오신걸 환영합니다!</title>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="/js/video.js"></script>
+<script src="/js/bigvideo.js"></script>
+<script src="/js/imagesloaded.pkgd.min.js"></script>
+<script src="/js/modernizr-custom.js"></script>
+<style>
+.wrapper {
+	height: 100vh;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+video {
+	position: fixed;
+	top: 0;
+	left: 0;
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: 100%;
+	z-index: -1;
+}
+</style>
+
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-3.3.1.js"></script>
+<link
+	href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Gugi&family=Nanum+Pen+Script&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@1,600&display=swap"
+	rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&family=Poor+Story&family=Sunflower:wght@300&display=swap"
+	rel="stylesheet">
+
 </head>
 <body>
-	<!-- 요청 ->Controller(Servlet) -> Service ->Dao ->Servlet ->결과처리 -->
-	<!-- Controller : 사용자 요청받음, view에서 넘어온 값 변수에 저장 
-	작업이 필요한경우 서비스 호출, 서비스 호출결과에 따른 결과처리-->
-	<!-- 컨트롤러에 요청을받음 , Connection을 생성해서 DAO 호출 
-	Database 여러번 왔다갔다 하려면 Service가 수행,
-	Commit, Rollback, Connection 관리,
-	Data편집  -->
-	<%@ include file="/WEB-INF/views/common/header.jsp" %>
-	
+	<div class="wrapper">
+		<%@include file="/WEB-INF/views/common/header.jsp"%>
+
+		<video autoplay loop muted poster="/imgs/logo.png" preload="metadata">
+		<source src="/video/main2.mp4" type="video/mp4"></video>
+	</div>
+
 </body>
 </html>

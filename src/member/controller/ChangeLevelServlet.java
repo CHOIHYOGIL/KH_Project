@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.MemberService;
+
+import member.model.service.UserService;
 
 /**
  * Servlet implementation class ChangeLevelServlet
@@ -42,7 +43,7 @@ public class ChangeLevelServlet extends HttpServlet {
 		System.out.println("memberLevel : "+memberLevel);
 		System.out.println("memberNo : "+memberNo);
 		//3. 비즈니스 로직
-		int result= new MemberService().changeLevel(memberLevel, memberNo);
+		int result= new UserService().changeLevel(memberLevel, memberNo);
 		
 		//4.결과처리
 		 RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/views/common/msg.jsp");
