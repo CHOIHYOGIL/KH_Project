@@ -39,7 +39,7 @@ public class DeleteAllMemberServlet extends HttpServlet {
 		boolean result=new UserService().deleteAllMember(num);
 
 		 RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/views/common/msg.jsp");
-		 request.setAttribute("loc", "/adminPage");
+		 request.setAttribute("loc", "/adminPage?reqPage=1");
 		 
 		 if(result) {
 			 request.setAttribute("msg", "탈퇴성공");

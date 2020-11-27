@@ -46,7 +46,7 @@ public class AdminPageServlet extends HttpServlet {
 		AdminPageData apd=new UserService().selectList(reqPage);
 		//4.결과처리
 		
-		RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/views/member/adminPage.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/views/user/adminPage.jsp");
 		request.setAttribute("list", apd.getList());
 		request.setAttribute("pageNavi", apd.getPageNavi());
 		rd.forward(request, response);

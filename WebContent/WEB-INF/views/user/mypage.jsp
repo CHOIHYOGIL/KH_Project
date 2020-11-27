@@ -14,6 +14,11 @@
 
 <body>
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
+	  <script type="text/javascript" src="http://code.jquery.com/jquery-3.3.1.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<section>
 		<form action="/updateMember" method="post" style="width : 800px; margin:0 auto; padding-top:400px; color:black; z-index:3000">
 		

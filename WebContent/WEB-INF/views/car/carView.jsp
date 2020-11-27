@@ -507,14 +507,6 @@ section>div>div {
 	<script>
 		var carLoc = document.getElementsByName("carAddr");
 		console.log(carLoc[0].value);
-		$(document).ready(function(){
-			function datePick() {
-
-				var today = new Date().toISOString().split("T");
-				document.getElementById("rsvStartDate").setAttribute("min", today);
-				document.getElementById("rsvEndDate").setAttribute("min", today);
-			}
-		})
 		
 		window.onload = function() {
 
@@ -609,13 +601,37 @@ section>div>div {
 
 		function datePick() {
 
-			var today = new Date().toISOString().split("T");
-			document.getElementById("rsvStartDate").setAttribute("min", today);
-			document.getElementById("rsvEndDate").setAttribute("min", today);
+			var today = getTimeStamp() ;
+				console.log("hihi")
+				console.log("today : "+today);
+				document.getElementById("rsvStartDate").setAttribute("min", today);
+				document.getElementById("rsvEndDate").setAttribute("min", today);
+			}
+		function getTimeStamp() {
+
+		    var d = new Date();
+		    var s =
+		        leadingZeros(d.getFullYear(), 4) + '-' +
+		        leadingZeros(d.getMonth() + 1, 2) + '-' +
+		        leadingZeros(d.getDate(), 2);
+
+		    return s;
+		}
+		function leadingZeros(n, digits) {
+
+		    var zero = '';
+		    n = n.toString();
+
+		    if (n.length < digits) {
+		        for (i = 0; i < digits - n.length; i++)
+		            zero += '0';
+		    }
+		    return zero + n;
 		}
 
+		 
 		$(function() {
-
+		
 			var Sdate;
 			var Edate;
 			var Stime;

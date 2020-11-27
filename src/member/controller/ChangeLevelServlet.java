@@ -47,7 +47,7 @@ public class ChangeLevelServlet extends HttpServlet {
 		
 		//4.결과처리
 		 RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/views/common/msg.jsp");
-		 request.setAttribute("loc", "/adminPage");
+		 request.setAttribute("loc", "/adminPage?reqPage=1");
 		 
 		 if(result>0) {
 			 request.setAttribute("msg", "변경성공");
