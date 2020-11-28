@@ -47,6 +47,7 @@ public class MyCarRsvListServlet extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/rsv/myCarRsvList.jsp");
 		request.setAttribute("list", rpd.getList());
 		request.setAttribute("pageNavi", rpd.getPageNavi());
+		request.setAttribute("userId", userId);
 		rd.forward(request, response);
 	}
 

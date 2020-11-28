@@ -42,18 +42,21 @@ public class InsertReviewServlet extends HttpServlet {
 		int carNo = Integer.parseInt(request.getParameter("carNo"));
 		String revCon = request.getParameter("reviewContent");
 		int rate = Integer.parseInt(request.getParameter("rate"));
+		int rsvNo=Integer.parseInt(request.getParameter("rsvNo"));
 
 		System.out.println(userId);
 		System.out.println(carNo);
 		System.out.println(revCon);
 		System.out.println(rate);
+		System.out.println(rsvNo);
 		
-		int result = RsvService.insertReview(userId,carNo,revCon,rate);
+		int result = RsvService.insertReview(userId,carNo,revCon,rate,rsvNo);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-		request.setAttribute("loc", "/myRsvList?userId=" + userId + "&reqPage=1");
+		/*request.setAttribute("loc", "/myRsvList?userId=" + userId + "&reqPage=1");*/
 		if (result > 0) {
 			request.setAttribute("msg", "후기 등록 성공!");
+			request.setAttribute("loc", "/changeRsvStatus?status=6&rsvNo="+rsvNo);
 		} else {
 			request.setAttribute("msg", "후기 등록 실패");
 		}

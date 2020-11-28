@@ -5,12 +5,13 @@
 <%
 	ArrayList<Rsv> list = (ArrayList<Rsv>) request.getAttribute("list");
 	String pageNavi = (String) request.getAttribute("pageNavi");
+	String userId = (String) request.getAttribute("userId");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>내 차의 예약목록/title>
 </head>
 <body>
 	<%@include file="/WEB-INF/views/common/header.jsp"%>
@@ -41,8 +42,8 @@
 			%>
 
 			<tr>
-			
-			
+
+
 				<td><%=r.getUserId()%></td>
 				<td><%=r.getRsvStart()%></td>
 				<td><%=r.getRsvStime()%></td>
@@ -68,8 +69,15 @@
  %> <span>반납</span> <%
  	} else if (r.getRsvStatus() == 5) {
  %> <span>반납확인완료</span> <%
- 	} else if (r.getRsvStatus() == 0 || r.getRsvStatus() == -1) {
- %> <span>렌트취소</span> <%
+ 	} else if (r.getRsvStatus() == 6) {
+ %> <span><a href="/carDetailView?carNo=<%=r.getCarNo()%>">후기보러가기</a></span>
+					<%
+						}else if (r.getRsvStatus() == 70) {
+							 %> <span>신고당함</span> <%
+					 	} else if (r.getRsvStatus() == 71) {
+							 %> <span>신고완료</span> <%
+					 	}  else if (r.getRsvStatus() == 0 || r.getRsvStatus() == -1) {
+					%> <span>렌트취소</span> <%
  	}
  %>
 				</td>
@@ -86,9 +94,13 @@
  	} else if (r.getRsvStatus() == 4) {
  %><a href="/changeRsvStatus?status=5&rsvNo=<%=r.getRsvNo()%>"
 					class="btn btn-primary btn-sm">반납확인</a> <a
-					href="/report?userId=<%=r.getUserId()%>"
+					href="/reportFrm?rsvNo=<%=r.getRsvNo()%>&userId=<%=userId%>"
 					class="btn btn-primary btn-sm">신고</a> <%
- 	}
+ 	}else if (r.getRsvStatus() ==70) {
+ 		 %><a
+					href="/reportFrm?rsvNo=<%=r.getRsvNo()%>&userId=<%=userId%>"
+					class="btn btn-primary btn-sm">신고</a> <%
+	}
  %>
 
 				</td>

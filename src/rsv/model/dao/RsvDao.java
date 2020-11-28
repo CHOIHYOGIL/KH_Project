@@ -228,10 +228,10 @@ public class RsvDao {
 
 
 
-	public int insertReview(Connection conn, String userId, int carNo, String revCon, int rate) {
+	public int insertReview(Connection conn, String userId, int carNo, String revCon, int rate, int rsvNo) {
 		PreparedStatement pstmt=null;
 		int result=0;
-		String query="insert into review values(review_seq.nextval,?,?,?,?,to_char(sysdate,'yyyy-mm-dd'))";
+		String query="insert into review values(review_seq.nextval,?,?,?,?,to_char(sysdate,'yyyy-mm-dd'),?)";
 		
 		try {
 			pstmt=conn.prepareStatement(query);
@@ -239,6 +239,46 @@ public class RsvDao {
 			pstmt.setString(2, userId);
 			pstmt.setString(3, revCon);
 			pstmt.setInt(4, rate);
+			pstmt.setInt(5, rsvNo);
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertReport(Connection conn, int rsvNo, String reporter, String reportee, String repCon) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String query="insert into report values(report_seq.nextval,to_char(sysdate,'yyyy-mm-dd'),?,?,?,?)";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, reporter);
+			pstmt.setString(2, reportee);
+			pstmt.setString(3, repCon);
+			pstmt.setInt(4, rsvNo);
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
+
+	public int updateReport(Connection conn, String reportee) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String query="update member set user_report=1 where user_id=?";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, reportee);
 			result=pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

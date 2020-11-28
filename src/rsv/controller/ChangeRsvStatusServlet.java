@@ -42,6 +42,7 @@ public class ChangeRsvStatusServlet extends HttpServlet {
 
 		// 3.비지니스로직
 		int result = new RsvService().updateRsvStatus(rsvNo, status); // 업데이트완료
+		
 
 		// 4.결과처리
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
@@ -76,8 +77,11 @@ public class ChangeRsvStatusServlet extends HttpServlet {
 					request.setAttribute("msg", "오류발생! 관리자에게 문의하세요");
 					request.setAttribute("loc", "/myRsvList?reqPage=1&userId=" + rsv.getUserId());
 					rd.forward(request, response);
-
 				}
+			} else if (status == 70) {
+				request.setAttribute("msg", "마이페이지로 돌아갑니다!");
+				request.setAttribute("loc", "/myRsvList?reqPage=1&userId=" + rsv.getUserId());
+				rd.forward(request, response);
 			} else if (status == 3) {
 				request.setAttribute("msg", "렌트를 시작합니다!");
 				request.setAttribute("loc", "/myRsvList?reqPage=1&userId=" + rsv.getUserId());
@@ -88,6 +92,13 @@ public class ChangeRsvStatusServlet extends HttpServlet {
 				rd.forward(request, response);
 			} else if (status == 5) {
 				request.setAttribute("msg", "반납을 확인했습니다!");
+				request.setAttribute("loc", "/myCarRsvList?reqPage=1&userId=" + rsv.getUserId());
+				rd.forward(request, response);
+			} else if (status == 6) {
+				request.setAttribute("loc", "/myRsvList?reqPage=1&userId=" + rsv.getUserId());
+				rd.forward(request, response);
+			} else if (status == 71) {
+				request.setAttribute("msg", "마이페이지로 돌아갑니다!");
 				request.setAttribute("loc", "/myCarRsvList?reqPage=1&userId=" + rsv.getUserId());
 				rd.forward(request, response);
 			}

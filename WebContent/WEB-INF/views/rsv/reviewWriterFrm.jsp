@@ -15,7 +15,7 @@
 	<%@include file="/WEB-INF/views/common/header.jsp"%>
 	<section>
 	<div class="table-wrapper" style="width: 80%; margin: 0 auto">
-		<form action="/insertReview?" method="post">
+		<form action="/insertReview" method="post">
 			<table class="table table-bordered">
 				<tr>
 					<th colspan="2">후기 작성</th>

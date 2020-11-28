@@ -63,12 +63,19 @@
  %> <span>반납확인요청</span> <%
  	} else if (r.getRsvStatus() == 5) {
  %> <span>반납완료</span> <%
- 	} else if (r.getRsvStatus() == 0 || r.getRsvStatus() == -1) {
- %> <span>예약취소</span> <%
+ 	} else if (r.getRsvStatus() == 6) {
+ %> <span><a href="/carDetailView?carNo=<%=r.getCarNo()%>">후기작성완료</a></span>
+					<%
+						}else if (r.getRsvStatus() == 70) {
+							 %> <span>신고완료</span> <%
+					 	} else if (r.getRsvStatus() == 71) {
+							 %> <span>신고당함</span> <%
+					 	}else if (r.getRsvStatus() == 0 || r.getRsvStatus() == -1) {
+					%> <span>예약취소</span> <%
  	}
  %>
 				</td>
-						<td>
+				<td>
 					<%
 						if (r.getRsvStatus() == 1) {
 					%><a href="/changeRsvStatus?status=0&rsvNo=<%=r.getRsvNo()%>"
@@ -85,11 +92,14 @@
  %> <a href="/changeRsvStatus?status=4&rsvNo=<%=r.getRsvNo()%>"
 					class="btn btn-primary btn-sm">반납하기</a> <%
  	} else if (r.getRsvStatus() == 5) {
- %><a href="/report?carNo=<%=r.getCarNo()%>"
+ %><a href="/reportFrm?rsvNo=<%=r.getRsvNo()%>&userId=<%=userId%>"
 					class="btn btn-primary btn-sm">신고</a> <a
 					href="/reviewWriterFrm?rsvNo=<%=r.getRsvNo()%>&userId=<%=userId%>"
 					class="btn btn-primary btn-sm">후기작성</a> <%
- 	}
+ 	}else if (r.getRsvStatus() == 71) {
+ 		 %><a href="/reportFrm?rsvNo=<%=r.getRsvNo()%>&userId=<%=userId%>"
+					class="btn btn-primary btn-sm">신고</a>  <%
+	}
  %>
 
 

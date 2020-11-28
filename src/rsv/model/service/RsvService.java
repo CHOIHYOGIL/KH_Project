@@ -170,9 +170,33 @@ public class RsvService {
 		
 	}
 
-	public static int insertReview(String userId, int carNo, String revCon, int rate) {
+	public static int insertReview(String userId, int carNo, String revCon, int rate, int rsvNo) {
 		Connection conn=JDBCTemplate.getConnection();
-		int result=new RsvDao().insertReview(conn,userId,carNo,revCon,rate);
+		int result=new RsvDao().insertReview(conn,userId,carNo,revCon,rate,rsvNo);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public static int insertReport(int rsvNo, String reporter, String reportee, String repCon) {
+		Connection conn=JDBCTemplate.getConnection();
+		int result=new RsvDao().insertReport(conn,rsvNo,reporter,reportee,repCon);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public static int updateReport(String reportee) {
+		Connection conn=JDBCTemplate.getConnection();
+		int result=new RsvDao().updateReport(conn,reportee);
 		if(result>0) {
 			JDBCTemplate.commit(conn);
 		}else {
