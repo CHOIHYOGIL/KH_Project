@@ -44,7 +44,7 @@
 
 		<table class="table table-striped">
 			<tr>
-				<th colspan="4" style="font-size: 20px; font-weight: bold ; text-align:center;">
+				<th colspan="4" style="font-size: 20px; font-weight: bold">
 					공지사항</th>
 			</tr>
 
@@ -70,6 +70,5 @@
 	</div>
 
 	</section>
-	<%@include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>

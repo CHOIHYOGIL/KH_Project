@@ -176,8 +176,9 @@
 			<div class="sub-navi">
 				<ul class="sub-menu">
 					<li><a href="/noticeList?reqPage=1">공지사항</a></li>
-					<li><a href="#">1:1 문의</a></li>
-					<li><a href="#">자주하는 질문</a></li>
+					<!-- 마이페이지 어디들어갈지 몰라서 일단  -->
+					<li><a href="#">나의 예약(임시)</a></li>  
+					<li><a href="#">내 차의 예약(임시)</a></li>
 				</ul>
 			</div>
 		</div>

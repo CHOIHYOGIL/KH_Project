@@ -8,20 +8,17 @@
 </head>
 <style>
 .footer{
-		height : 200px;
-	background-color:black;
-      
+		height : 15%;
+        background-color: #373a40;
     }
     .footer>div{
         float: left;
     }
     .footer-box{
-    background-color:black;
         width: 100%;
         height: 40%;
     }
     .footer-content{
-     
         font-size: 20px;
     }
     .footer-content>li{
@@ -38,7 +35,6 @@
     }
     .footer-box2,.footer-box3{
     	margin-left : 200px;
-
         color: #686d76;
         width: 30%;
         line-height: 10px;

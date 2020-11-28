@@ -47,8 +47,7 @@ public class SearchKeywordServlet extends HttpServlet {
 		//3. 비즈니스 로직
 		ArrayList<User> list=new UserService().searchKeyword(type,keyword);
 		
-		System.out.println("list : "+list);
-		RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/views/user/adminPage.jsp");
+		RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/views/member/adminPage.jsp");
 		request.setAttribute("list", list);
 		request.setAttribute("type", type);
 		request.setAttribute("key", keyword);

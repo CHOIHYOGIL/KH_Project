@@ -68,7 +68,7 @@
  	}
  %>
 				</td>
-				<td>
+						<td>
 					<%
 						if (r.getRsvStatus() == 1) {
 					%><a href="/changeRsvStatus?status=0&rsvNo=<%=r.getRsvNo()%>"
@@ -85,9 +85,9 @@
  %> <a href="/changeRsvStatus?status=4&rsvNo=<%=r.getRsvNo()%>"
 					class="btn btn-primary btn-sm">반납하기</a> <%
  	} else if (r.getRsvStatus() == 5) {
- %><a href="/report?userId=<%=r.getUserId()%>"
+ %><a href="/report?carNo=<%=r.getCarNo()%>"
 					class="btn btn-primary btn-sm">신고</a> <a
-					href="/writeReviewFrm?carNo?<%=r.getCarNo()%>&userId=<%=userId %>"
+					href="/reviewWriterFrm?rsvNo=<%=r.getRsvNo()%>&userId=<%=userId%>"
 					class="btn btn-primary btn-sm">후기작성</a> <%
  	}
  %>

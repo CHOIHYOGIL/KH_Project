@@ -1,4 +1,4 @@
-package member.controller;
+package rsv.controller;
 
 import java.io.IOException;
 
@@ -9,19 +9,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import member.model.service.UserService;
+import rsv.model.service.RsvService;
+import rsv.model.vo.Rsv;
 
 /**
- * Servlet implementation class ChangeAllLevelServlet
+ * Servlet implementation class ReviewWriterFrmServlet
  */
-@WebServlet(name = "ChangeAllLevel", urlPatterns = { "/changeAllLevel" })
-public class ChangeAllLevelServlet extends HttpServlet {
+@WebServlet(name = "ReviewWriterFrm", urlPatterns = { "/reviewWriterFrm" })
+public class ReviewWriterFrmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ChangeAllLevelServlet() {
+    public ReviewWriterFrmServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,28 +31,23 @@ public class ChangeAllLevelServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//1. 인코딩
+		// 1.인코딩
 		request.setCharacterEncoding("utf-8");
+
+		// 2.view값 저장
+		int rsvNo = Integer.parseInt(request.getParameter("rsvNo"));
+		String userId = request.getParameter("userId");
+
+		// 3.비지니스로직
 		
-		//2.view에서 보낸 값 저장
-		String num= request.getParameter("num");
-		String level=request.getParameter("level");
-		
-		//3. 비즈니스 로직
-		 boolean result=new UserService().changeAllLevel(num, level);
-		 
-		 //4. 결과처리
-		 
-		 RequestDispatcher rd=request.getRequestDispatcher("WEB-INF/views/common/msg.jsp");
-		 request.setAttribute("loc", "/adminPage");
-		 
-		 if(result) {
-			 request.setAttribute("msg", "변경성공");
-		 }else {
-			 request.setAttribute("msg", "변경실패");
-		 }
-		 rd.forward(request, response);
+		Rsv rsv=new RsvService().selectOneRsv(rsvNo);
+
+		// 4.결과처리
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/rsv/reviewWriterFrm.jsp");
+		request.setAttribute("userId",userId);
+		request.setAttribute("rsv",rsv);
+	
+		rd.forward(request, response);
 	}
 
 	/**
