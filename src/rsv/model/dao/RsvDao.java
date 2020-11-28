@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import car.model.vo.Review;
 import common.JDBCTemplate;
 import rsv.model.vo.Rsv;
 
@@ -75,6 +76,7 @@ public class RsvDao {
 				r.setRsvEtime(rset.getString("rsv_etime"));
 				r.setRsvStatus(rset.getInt("rsv_status"));
 				r.setRsvPrice(rset.getString("rsv_price"));
+				r.setCarNo(rset.getInt("car_no"));
 
 				list.add(r);
 			}
@@ -168,6 +170,7 @@ public class RsvDao {
 				r.setRsvEtime(rset.getString("rsv_etime"));
 				r.setRsvStatus(rset.getInt("rsv_status"));
 				r.setRsvPrice(rset.getString("rsv_price"));
+				r.setCarNo(rset.getInt("car_no"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -221,6 +224,29 @@ public class RsvDao {
 		return result;
 		
 		
+	}
+
+
+
+	public int insertReview(Connection conn, String userId, int carNo, String revCon, int rate) {
+		PreparedStatement pstmt=null;
+		int result=0;
+		String query="insert into review values(review_seq.nextval,?,?,?,?,to_char(sysdate,'yyyy-mm-dd'))";
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setInt(1,carNo);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, revCon);
+			pstmt.setInt(4, rate);
+			result=pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
 	}
 
 }

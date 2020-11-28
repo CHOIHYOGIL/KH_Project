@@ -3,6 +3,7 @@ package rsv.model.service;
 import java.sql.Connection;
 import java.util.ArrayList;
 
+import car.model.vo.Review;
 import common.JDBCTemplate;
 
 import rsv.model.dao.RsvDao;
@@ -168,5 +169,18 @@ public class RsvService {
 		return result;
 		
 	}
+
+	public static int insertReview(String userId, int carNo, String revCon, int rate) {
+		Connection conn=JDBCTemplate.getConnection();
+		int result=new RsvDao().insertReview(conn,userId,carNo,revCon,rate);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
 
 }

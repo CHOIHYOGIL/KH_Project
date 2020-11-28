@@ -300,13 +300,14 @@ table td {
 						</div>
 					</div>
 
+<!--/////////////////////////////////////////////////////////////////////////////////////////  -->
 					<h2>소현 : 어디로들어갈지몰라서 일단 여기에 추가</h2>
 					<a href="/myRsvList?userId=<%=member.getUserId()%>&reqPage=1"
 						class="choice choiceMenu">나의 예약</a> <br>
 					<a href="/myCarRsvList?userId=<%=mycar.getUserId()%>&reqPage=1">
 								내 차의 예약 내역 보기</a> 
 
-
+<!--/////////////////////////////////////////////////////////////////////////////////////////  -->
 
 
 					<div class="contentBottom">

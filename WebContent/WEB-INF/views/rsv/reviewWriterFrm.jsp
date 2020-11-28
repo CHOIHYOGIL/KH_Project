@@ -15,12 +15,16 @@
 	<%@include file="/WEB-INF/views/common/header.jsp"%>
 	<section>
 	<div class="table-wrapper" style="width: 80%; margin: 0 auto">
-		<form action="/insertReview?carNo=<%=rsv.getCarNo() %>&userId=<%=userId %>" method="post">
+		<form action="/insertReview?" method="post">
 			<table class="table table-bordered">
 				<tr>
 					<th colspan="2">후기 작성</th>
 				</tr>
 				<tr>
+				<input type="hidden" name="rsvNo" value="<%=rsv.getRsvNo()%>">
+				<input type="hidden" name="userId" value="<%=userId%>">
+				<input type="hidden" name="carNo" value="<%=rsv.getCarNo()%>">
+				
 					<th>예약일</th>
 					<td><%=rsv.getRsvDate() %></td>
 				</tr>
@@ -29,10 +33,39 @@
 					<th>사용기간</th>
 					<td><%=rsv.getRsvStart() %> ~ <%=rsv.getRsvEnd() %></td>
 				</tr>
+				
+				
+				
+				<tr>
+					<th>사용한 차</th>
+					<td><%=rsv.getCarNo()%></td>
+				</tr>
+				
+					<tr>
+					<th>예약번호</th>
+					<td><%=rsv.getRsvNo()%></td>
+				</tr>
+				
+				
+				
+				
+				
+				
+				<tr>
+				<th>평점</th>
+				<td><select style="width: 50px;" name="rate">
+							<option value="5" selected>5</option>
+							<option value="4">4</option>
+							<option value="3">3</option>
+							<option value="2">2</option>
+							<option value="1">1</option>
+							<option value="0">0</option>
+					</select></td>
+				</tr>
 				<tr>
 					<th>내용</th>
 					<td><textarea name="reviewContent" class="form-control"
-							row="20" col="40"></textarea></td>
+							row="50" col="40"></textarea></td>
 				</tr>
 
 				<tr style="text-align: center;">
