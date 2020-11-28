@@ -150,6 +150,17 @@ public class CarService {
 		return result;
 	}
 
+	public ArrayList<Car> searchKeyword(String location, String carType,  String carName) {
+		
+		Connection conn=JDBCTemplate.getConnection();
+		ArrayList<Car> list=null;
+		
+		list=new CarDao().searchKeyword(conn,location,carType,carName);
+		
+		JDBCTemplate.close(conn);
+		return list;
+	}
+
 	////////////////////////////////////////////////////////////
 
 }

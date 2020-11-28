@@ -269,6 +269,52 @@ public class CarDao {
 		return result;
 	}
 
+	public ArrayList<Car> searchKeyword(Connection conn, String location, String carType, 
+			String carName) {
+		
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		System.out.println("111111");
+		System.out.println(carType);
+		
+		System.out.println(carName);
+		System.out.println(location);
+		String query="select * from car where CAR_TYPE=? and CAR_NAME=? and CAR_LOCATION LIKE(?) ";
+		ArrayList<Car> list=new ArrayList<Car>();
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, carType);
+
+		
+			pstmt.setString(2, carName);
+			pstmt.setString(3, '%'+location+'%');
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Car c=new Car();
+				c.setCarEdate(rset.getString("CAR_EDATE"));
+				c.setCarSdate(rset.getString("CAR_SDATE"));
+				c.setCarName(rset.getString("CAR_NAME"));
+				c.setCarLocation(rset.getString("CAR_LOCATION"));
+				c.setCarPrice(rset.getString("CAR_PRICE"));
+				c.setCarType(rset.getString("CAR_TYPE"));
+				c.setCarRate(rset.getDouble("CAR_RATE"));
+				list.add(c);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		
+		return list;
+	
+	}
+
 	////////////////////////////////////////////////////////////
 
 }
