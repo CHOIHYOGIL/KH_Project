@@ -1,7 +1,5 @@
 package car.model.vo;
 
-import java.sql.Date;
-
 public class Car {
 	private int rNum;
 	private int carNo;
@@ -17,16 +15,17 @@ public class Car {
 	private String carPrice;
 	private String carSdate;
 	private String carEdate;
-	private double carRate;
 	private String carNopan;
+	private double carRate;
 	public Car() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Car(int carNo, String userId, String carName, String carType, int carYear, String carImage, String carImage2,
-			String carImage3, String carImage4, String carLocation, String carPrice, String carSdate, String carEdate,
-			double carRate, String carNopan) {
+	public Car(int rNum, int carNo, String userId, String carName, String carType, int carYear, String carImage,
+			String carImage2, String carImage3, String carImage4, String carLocation, String carPrice, String carSdate,
+			String carEdate, String carNopan, double carRate) {
 		super();
+		this.rNum = rNum;
 		this.carNo = carNo;
 		this.userId = userId;
 		this.carName = carName;
@@ -40,8 +39,8 @@ public class Car {
 		this.carPrice = carPrice;
 		this.carSdate = carSdate;
 		this.carEdate = carEdate;
-		this.carRate = carRate;
 		this.carNopan = carNopan;
+		this.carRate = carRate;
 	}
 	public int getrNum() {
 		return rNum;
@@ -127,20 +126,20 @@ public class Car {
 	public void setCarEdate(String carEdate) {
 		this.carEdate = carEdate;
 	}
-	public double getCarRate() {
-		return carRate;
-	}
-	public void setCarRate(double carRate) {
-		this.carRate = carRate;
-	}
 	public String getCarNopan() {
 		return carNopan;
 	}
 	public void setCarNopan(String carNopan) {
 		this.carNopan = carNopan;
 	}
+	public double getCarRate() {
+		return carRate;
+	}
+	public void setCarRate(double carRate) {
+		this.carRate = carRate;
+	}
+
+
 	
-	
-	
-	
+
 }

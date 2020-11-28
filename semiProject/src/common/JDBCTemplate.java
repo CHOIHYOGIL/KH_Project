@@ -12,8 +12,8 @@ public class JDBCTemplate {
 	public static Connection getConnection() {
 		Connection conn = null;
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			conn = DriverManager.getConnection("jdbc:oracle:thin:@1.220.236.74:15211:xe","selcar","1234");
+			 Class.forName("oracle.jdbc.driver.OracleDriver");
+	         conn = DriverManager.getConnection("jdbc:oracle:thin:@1.220.236.74:15211:xe", "selcar", "1234");
 			conn.setAutoCommit(false);//자동으로 커밋되는 설정을 해제
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
