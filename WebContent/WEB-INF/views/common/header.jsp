@@ -65,9 +65,10 @@
 }
 
 .sub-header {
-	display: none;
-	text-align: center;
+	/* display: none; */
+	opacity: 0; text-align : center;
 	width: 100%;
+	text-align: center;
 }
 
 .sub-header>div {
@@ -125,7 +126,9 @@
 }
 
 .on {
-	display: block;
+	/* 메뉴내려오면서 content도 내려같이 내려가는거 수정 */
+	/* display: block; */
+	opacity: 100;
 }
 </style>
 </head>
@@ -138,7 +141,7 @@
 		<div class="navi">
 			<ul class="menu">
 				<li><a href="#">서비스 소개</a></li>
-				<li><a href="#">차량 예약/등록</a></li>
+				<li><a href="#">렌트 이용</a></li>
 				<li><a href="#">고객센터</a></li>
 			</ul>
 		</div>
@@ -152,7 +155,8 @@
 				<%
 					} else {
 				%>
-				<li><a href="/mypage?userId=<%=u.getUserId()%>"><%=u.getUserId()%> 님</a></li>
+				<li><a href="/mypage?userId=<%=u.getUserId()%>"><%=u.getUserId()%>
+						님</a></li>
 				<li><a href="/logout">로그아웃</a></li>
 				<%
 					}
@@ -164,7 +168,6 @@
 				<ul class="sub-menu1">
 					<li><a href="/views/selcar_introduce.jsp">서비스 소개</a></li>
 					<li><a href="/views/selcar_manual.jsp">이용안내</a></li>
-					<li><a href="#">고객센터</a></li>
 				</ul>
 			</div>
 			<div class="sub-navi">
@@ -176,7 +179,7 @@
 			<div class="sub-navi">
 				<ul class="sub-menu">
 					<li><a href="/noticeList?reqPage=1">공지사항</a></li>
-					<li><a href="#">1:1 문의</a></li>  
+					<li><a href="#">1:1 문의</a></li>
 					<li><a href="#">고객센터</a></li>
 				</ul>
 			</div>

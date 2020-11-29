@@ -34,20 +34,20 @@ public class NoticeDeleteServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 1.�씤肄붾뵫
+		// 1.인코딩
 		request.setCharacterEncoding("utf-8");
-		// 2.view�뿉�꽌 蹂대궦 �뜲�씠�꽣 ���옣
+		// 2.view에서 보낸 데이터 저장
 		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
-		// 3.鍮꾩��땲�뒪濡쒖쭅
+		// 3.비지니스로직
 		Notice n = new NoticeService().selectOneNotice(noticeNo);
 		int result = NoticeService.deleteOneNotice(noticeNo);
-		// 5.寃곌낵泥섎━
+		// 5.결과처리
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		if (result > 0) {
-			request.setAttribute("msg", "�궘�젣 �셿猷�");
+			request.setAttribute("msg", "삭제 완료");
 			request.setAttribute("loc", "/noticeList?reqPage=1");
 		} else {
-			request.setAttribute("msg", "怨듭��궗�빆 �궘�젣 �떎�뙣");
+			request.setAttribute("msg", "공지사항 삭제 실패");
 			request.setAttribute("loc", "noticeView?noticeNo=" + noticeNo);
 		}
 		rd.forward(request, response);

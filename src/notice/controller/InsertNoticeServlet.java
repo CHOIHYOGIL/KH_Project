@@ -39,25 +39,25 @@ public class InsertNoticeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		// 1.�씤肄붾뵫
+		// 1.인코딩
 		request.setCharacterEncoding("utf-8");
 
-		// 2.view�뿉�꽌 �꽆寃⑥� 媛� ���옣
+		// 2.view에서 넘겨준 값 저장
 		String noticeTitle = request.getParameter("noticeTitle");
 		String noticeContent = request.getParameter("noticeContent");
 		Notice n = new Notice();
 		n.setNoticeTitle(request.getParameter("noticeTitle"));
 		n.setNoticeContent(request.getParameter("noticeContent"));
 
-		// 3.鍮꾩��땲�뒪濡쒖쭅
+		// 3.비지니스로직
 		int result = new NoticeService().insertNotice(n);
 
-		// 4.寃곌낵泥섎━
+		// 4.결과처리
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
 		if (result > 0) {
-			request.setAttribute("msg", "怨듭��궗�빆 �벑濡� �꽦怨�");
+			request.setAttribute("msg", "공지사항 등록 성공");
 		} else {
-			request.setAttribute("msg", "怨듭��궗�빆 �벑濡� �떎�뙣");
+			request.setAttribute("msg", "공지사항 등록 실패");
 		}
 		request.setAttribute("loc", "/noticeList?reqPage=1");
 		rd.forward(request, response);

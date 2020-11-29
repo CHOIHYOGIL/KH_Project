@@ -12,36 +12,14 @@ public class NoticeService {
 
 	public NoticePageData selectList(int reqPage) {
 
-		// �럹�씠吏뺤쿂由�
-		// �궗�슜�옄媛� 蹂대궡以섏빞�븯�뒗 媛�
-		// 1) 紐뉖쾲吏� �럹�씠吏�瑜� �슂泥��븯�뒗吏�
 
-		// 媛쒕컻�옄媛� 吏��젙�빐�빞�븯�뒗 媛�
-		// 1) �븳 �럹�씠吏��뿉 紐뉕컻�쓽 寃뚯떆臾� 蹂댁뿬以꾩� -> �븳 �럹�씠吏� �떦 10媛� 寃뚯떆臾�
-		// 2) �럹�씠吏� �꽕鍮꾧쾶�씠�뀡 湲몄씠 -> 5 (<�씠�쟾 1 2 3 4 5 �떎�쓬>)
-
-		// 怨꾩궛�빐�빞�븯�뒗 媛�
-		// 1) 珥� 寃뚯떆臾� �닔 -> totalCount
-		// 2) 洹� 以묒뿉 �슂泥��럹�씠吏��뿉 �뱾�뼱媛��빞�븷 寃뚯떆臾� 踰덊샇 -> start, end
 
 		Connection conn = JDBCTemplate.getConnection();
 		NoticeDao dao = new NoticeDao();
-		int totalCount = dao.totalCount(conn); // 珥� 寃뚯떆臾� 援ы븯�뒗 dao
-		int numPerPage = 10; // �븳�럹�씠吏��떦 蹂댁뿬吏��뒗 寃뚯떆臾� �닔
+		int totalCount = dao.totalCount(conn); 
+		int numPerPage = 10; 
 		int totalPage = totalCount % numPerPage == 0 ? (totalCount / numPerPage) : (totalCount / numPerPage) + 1;
 
-		// int totalPage = 0;
-		// if (totalCount % numPerPage == 0) {
-		// totalPage = totalCount / numPerPage;
-		// } else {
-		// totalPage = totalCount / numPerPage + 1;
-		// }
-
-		// System.out.println("totalCount : " + totalCount);
-
-		// reqPage=1 -> start:1, end:10
-		// reqPage=2 -> start:11, end:20
-		// reqPage=3 -> start:21, end:30
 		int start = (reqPage - 1) * numPerPage + 1; // �빐�떦 �럹�씠吏� 寃뚯떆臾쇱쓽 �떆�옉 踰덊샇
 		int end = reqPage * numPerPage; // �빐�떦 �럹�씠吏� 寃뚯떆臾쇱쓽 �걹 踰덊샇
 		// System.out.println("�떆�옉踰덊샇 : " + start + " / �걹踰덊샇 : " + end);

@@ -11,9 +11,12 @@
 <html>
 <head>
 
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>selcar | 공지사항</title>
 <style>
@@ -33,7 +36,7 @@
 	<div class="table-wrapper"
 		style="text-align: center; width: 80%; margin: 0 auto;">
 		<%
-			if (u != null && u.getUserGrade() == 1) {
+			if (u != null && u.getUserGrade() == 0) {
 		%>
 		<div style="text-align: right;">
 			<a href="/noticeWriterFrm" class="btn btn-primary btn-sm">글쓰기</a>
@@ -70,5 +73,6 @@
 	</div>
 
 	</section>
+	<%@include file="/WEB-INF/views/common/footer.jsp"%>
 </body>
 </html>

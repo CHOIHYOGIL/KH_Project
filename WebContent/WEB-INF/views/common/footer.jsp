@@ -20,6 +20,7 @@
     }
     .footer-content{
         font-size: 20px;
+        
     }
     .footer-content>li{
         text-align: center;
@@ -30,7 +31,7 @@
         list-style: none;
     }
     .footer-content>li>a{
-        color: white;
+        color:#686d76;
         text-decoration: none;
     }
     .footer-box2,.footer-box3{

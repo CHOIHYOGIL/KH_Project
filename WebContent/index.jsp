@@ -31,7 +31,7 @@ video {
 	min-width: 100%;
 	min-height: 100%;
 	width: auto;
-	height: 100%;
+	height: auto;
 	z-index: -1;
 }
 </style>

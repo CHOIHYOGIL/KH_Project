@@ -33,16 +33,16 @@ public class NoticeListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 1.�씤肄붾뵫
+		// 1.인코딩
 		request.setCharacterEncoding("utf-8");
 
-		// 2.view媛� ���옣
-		int reqPage = Integer.parseInt(request.getParameter("reqPage")); // 1�럹�씠吏� �슂泥�
+		// 2.view값 저장
+		int reqPage = Integer.parseInt(request.getParameter("reqPage")); // 1페이지 요청
 
-		// 3.鍮꾩��땲�뒪濡쒖쭅
+		// 3.비지니스로직
 		NoticePageData npd = new NoticeService().selectList(reqPage);
 
-		// 4.寃곌낵泥섎━
+		// 4.결과처리
 		RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/notice/noticeList.jsp");
 		request.setAttribute("list", npd.getList());
 		request.setAttribute("pageNavi", npd.getPageNavi());

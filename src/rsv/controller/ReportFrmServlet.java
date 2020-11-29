@@ -1,4 +1,4 @@
-package notice.controller;
+package rsv.controller;
 
 import java.io.IOException;
 
@@ -9,20 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import notice.model.service.NoticeService;
-import notice.model.vo.Notice;
+import car.model.service.CarService;
+import car.model.vo.Car;
+import rsv.model.service.RsvService;
+import rsv.model.vo.Rsv;
 
 /**
- * Servlet implementation class NoticeUpdateFrmServlet
+ * Servlet implementation class ReportUserFrmServlet
  */
-@WebServlet(name = "NoticeUpdateFrm", urlPatterns = { "/noticeUpdateFrm" })
-public class NoticeUpdateFrmServlet extends HttpServlet {
+@WebServlet(name = "ReportFrm", urlPatterns = { "/reportFrm" })
+public class ReportFrmServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public NoticeUpdateFrmServlet() {
+	public ReportFrmServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -36,15 +38,26 @@ public class NoticeUpdateFrmServlet extends HttpServlet {
 		// 1.인코딩
 		request.setCharacterEncoding("utf-8");
 
-		// 2.view에서 넘어온 값 저장
-		int noticeNo = Integer.parseInt(request.getParameter("noticeNo"));
+		// 2.view값 저장
+		int rsvNo = Integer.parseInt(request.getParameter("rsvNo"));
+		String reporter = request.getParameter("userId");
 
 		// 3.비지니스로직
-		Notice n = new NoticeService().selectOneNotice(noticeNo);
+
+		Rsv rsv = new RsvService().selectOneRsv(rsvNo);
+		int carNo = rsv.getCarNo();
+		Car car = new CarService().selectOneCar(carNo);
 
 		// 4.결과처리
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/notice/noticeUpdateFrm.jsp");
-		request.setAttribute("n", n);
+		RequestDispatcher rd = null;
+		if (reporter.equals(car.getUserId())) { // 신고하는사람: 차주인
+			rd = request.getRequestDispatcher("/WEB-INF/views/rsv/reportUserFrm.jsp");
+		} else { // 신고하는사람:차 빌렸던사람
+			rd = request.getRequestDispatcher("/WEB-INF/views/rsv/reportCarFrm.jsp");
+		}
+		request.setAttribute("userId", reporter);
+		request.setAttribute("rsv", rsv);
+		request.setAttribute("car", car);
 		rd.forward(request, response);
 	}
 

@@ -39,29 +39,27 @@ public class NoticeUpdateServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 1.�씤肄붾뵫
+		// 1.인코딩
 		request.setCharacterEncoding("utf-8");
 
-		
 		Notice n = new Notice();
 		n.setNoticeNo(Integer.parseInt(request.getParameter("noticeNo")));
 		n.setNoticeTitle(request.getParameter("noticeTitle"));
 		n.setNoticeContent(request.getParameter("noticeContent"));
 
-		//3.鍮꾩��땲�뒪濡쒖쭅
-		int result=new NoticeService().updateNotice(n);
-		
-		//4.寃곌낵泥섎━
-		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-		if(result>0) {
-			request.setAttribute("msg", "怨듭��궗�빆 �닔�젙 �셿猷�");
-		}else {
-			request.setAttribute("msg","怨듭��궗�빆 �닔�젙 �떎�뙣");
+		// 3.비지니스로직
+		int result = new NoticeService().updateNotice(n);
+
+		// 4.결과처리
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		if (result > 0) {
+			request.setAttribute("msg", "공지사항 수정 완료");
+		} else {
+			request.setAttribute("msg", "공지사항 수정 실패");
 		}
-		request.setAttribute("loc", "/noticeView?noticeNo="+n.getNoticeNo());
+		request.setAttribute("loc", "/noticeView?noticeNo=" + n.getNoticeNo());
 		rd.forward(request, response);
-		
-		
+
 	}
 
 	/**
