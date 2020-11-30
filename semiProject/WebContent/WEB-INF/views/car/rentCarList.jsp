@@ -31,27 +31,28 @@
 		margin:0 auto;
 	}
 	#option-box{
-		height:40vh;
+		height:100px;
 		background-color:rgb(238,238,238);
 		display: flex;
         align-items: center;
+        padding: 15px;
 	}
 	#option-box table{
 		width:100%;
-		margin:10px auto;
+		height:100%;
+		margin:0 auto;
 		border: none;
 	}
 	#option-box table tr{
+		height:100%;
+	}
+	#option-box table tr>*{
 		margin:0;
+		text-align: center;
 		
 	}
-	#option-box table td{
-		height:100%;
-		width:calc(100%/4);
-		text-align: center;
-	}
 	
-	#option-box table label{
+	#option-box table span{
 		display:inline-block;
 		margin-left : 10px;
 	}
@@ -83,11 +84,15 @@
 		line-height:40px;
 		text-align: center;
 	}
+	.carlist a{
+		color:#111;
+	}
 	.carlist li{
 		display: block;
 		width:calc(100%/3);
 		float :left;
 		padding:10px;
+		box-sizing: border-box;
 	}
 	.carlist li>div{
 		border:1px solid #eee;
@@ -113,6 +118,8 @@
 		width:250px;
 		height:250px;
 	}
+	.car-img-wrap+div>*{
+	}
 	@media(max-width:800px){
 	section>div{
 		width:100%;
@@ -123,6 +130,9 @@
 		width:600px;
 	}
 	
+	}
+	.gray{
+		color:#aaa;
 	}
 </style>
 </head>
@@ -137,10 +147,14 @@
 
         <div id="option-box">
                 <table>
+	                <tr>
+		                <th>지역</th>
+		                <th>대여일</th>
+		                <th>차량유형</th>
+		                <th>모델명</th>
+	                </tr>
                     <tr>
-                        <td colspan="3">
-                        <div>지역</div>
-                       
+                        <td>
                             <select style="width : 50px;">
                             	<option>지역선택</option>
                                 <option value="서울">서울</option>
@@ -152,18 +166,17 @@
                                 <option value="부산">부산</option>
                             </select>
                             
-                            <input type="text" name="addr" style="width : 100px;" required>
+                            <input type="text" name="addr" required>
                         </td>
-                        <td colspan="3">
-                        	<div>기간<i class="far fa-calendar-minus"></i></div>
-                            <input type="date" name="rsvStartDate" id="rsvStartDate" value=""><br>
+                        <td>
+                            <input type="date" name="rsvStartDate" id="rsvStartDate" value="">
                             <input type="date" name="rsvEndDate" id="rsvEndDate">
                         </td>
-                         <th>차종</th>
-                        <td colspan="3">
-                            <label><input type="checkbox" name="car-type" value="소형">소형</label>
-                            <label><input type="checkbox" name="car-type" value="중형">중형</label>
-                            <label><input type="checkbox" name="car-type" value="대형">대형</label>
+                         
+                        <td style="display: flex; align-items: center;justify-content:center;">
+                            <input type="checkbox" name="car-type" value="소형"><span>소형</span> &nbsp;
+                            <input type="checkbox" name="car-type" value="중형"><span>중형</span> &nbsp;
+                            <input type="checkbox" name="car-type" value="대형"><span>대형</span>
                         </td>
                         <td>
                             <input type="text" name="carName">
@@ -185,24 +198,23 @@
         <div id="rent-car-list">
             <ul class="carlist">
                 <%for(Car c : list){ %>
-                <a href="/rentCarView?carNo=<%=c.getCarNo() %>">
+                <a href="/carDetailView?carNo=<%=c.getCarNo() %>">
                 <li class="carList-li">
-                    <div>
-		            	<div class="car-img-wrap">
-		                    <img src="/img/car/<%=c.getCarImage()%>" style="width:100%;">
-		                </div>
+		            <div class="car-img-wrap">
+		                <img src="/img/car/<%=c.getCarImage()%>" style="width:100%;">
+		            </div>
 	                    
+                    <div style="text-align: justify;padding:10px;box-sizing: border-box;">
 	                    <div>
-	                    	<span><h4 style="display:inline-block;"><%=c.getCarName() %></h4></span>
+	                    	<span style=""><h4 style="display:inline-block;"><%=c.getCarName() %></h4></span>  &nbsp;
 	                    	<span>
 		                    	<i class="fas fa-star" style="color:orange;"></i> 
 		                    	<%=c.getCarRate() %> / 5
 	                    	</span>
 	                    </div>
-	                    <div><%=c.getCarType() %></div>
-	                    <div><%=String.format("%,d", Integer.parseInt(c.getCarPrice())) %></div>
-	                    <div><%=c.getCarSdate() %> ~ <%=c.getCarEdate() %></div>
-	                    <div><%=c.getCarLocation() %></div>
+	                    <div class="gray"><span><%=c.getCarType() %></span> &nbsp; <span> <%=String.format("%,d", Integer.parseInt(c.getCarPrice())) %>원</span></div>      
+	                    <div class="gray"><%=c.getCarSdate() %><span> ~ </span><%=c.getCarEdate() %></div>
+	                    <div class="gray"><%=c.getCarLocation() %></div>
                 	</div>
                 </li>
                 </a>
@@ -216,6 +228,7 @@
         		</ul>
         	</div>
         </div>
+        
     </section>
     <%@include file="/WEB-INF/views/common/footer.jsp" %>
     <script>

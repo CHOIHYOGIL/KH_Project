@@ -1,29 +1,26 @@
-package car.controller;
+package member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import car.model.service.RentCarService;
-import car.model.vo.Car;
-import car.model.vo.Review;
+import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class CarViewServlet
+ * Servlet implementation class LogoutServlet
  */
-@WebServlet(name = "RentCarView", urlPatterns = { "/rentCarView" })
-public class RentCarViewServlet extends HttpServlet {
+@WebServlet(name = "Logout", urlPatterns = { "/logout" })
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RentCarViewServlet() {
+    public LogoutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,16 +29,23 @@ public class RentCarViewServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//1. 인코딩
 		request.setCharacterEncoding("utf-8");
 		
-		int carNo = Integer.parseInt(request.getParameter("carNo"));
+		//2. view에서 넘어온 데이터 저장
+		//3. 비즈니스 로직 (db작업 필요하지 않으므로 service 호출 x)
 		
-		Car car =  new RentCarService().selectOneCar(carNo);
-		ArrayList<Review> list = new RentCarService().selectReview(carNo);
+		HttpSession session= request.getSession(false);
+		if(session!=null) {
+			session.invalidate();
+		}
 		
-		request.setAttribute("car", car);
-		request.setAttribute("rlist", list);
-		request.getRequestDispatcher("/WEB-INF/views/car/carView.jsp").forward(request, response);
+		//4. 결과처리
+		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		request.setAttribute("msg", "로그아웃 성공");
+		request.setAttribute("loc", "/");
+		rd.forward(request, response);
 		
 	}
 

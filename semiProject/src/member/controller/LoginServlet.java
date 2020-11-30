@@ -1,6 +1,8 @@
 package member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import member.model.service.UserService;
+
 import member.model.vo.User;
 
 /**
@@ -30,15 +33,38 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		//1. 인코딩
 		request.setCharacterEncoding("utf-8");
-		String userId = request.getParameter("memberId");
-		String userPw = request.getParameter("memberPw");
-		User u = new UserService().loginUser(userId,userPw);
-		if(u!= null) {
-			HttpSession session = request.getSession();
-			session.setAttribute("u",u);
+		
+		User member=new User();
+		member.setUserId(request.getParameter("userId"));
+		member.setUserPw(request.getParameter("userPw"));
+		
+		
+		User loginMember=new UserService().selectOneMember(member);
+		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+		if(loginMember != null) {
+			System.out.println(loginMember);
+			System.out.println(loginMember.getUserGrade());
+			if(loginMember.getUserGrade()==2) {
+				request.setAttribute("msg", "준회원은 로그인 권한이 없습니다. 관리자에게 문의하세요");
+			}else {
+				System.out.println("hihi");
+				HttpSession session=request.getSession();
+				session.setAttribute("user", loginMember);
+				request.setAttribute("msg", "로그인 성공");
+			}
+			request.setAttribute("loc", "/");
+			
+		}else {
+			//로그인 실패
+			request.setAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
+			request.setAttribute("loc", "/views/user/login.jsp");
+			
 		}
-		request.getRequestDispatcher("/").forward(request, response);
+		
+		rd.forward(request, response);
 	}
 
 	/**

@@ -117,6 +117,7 @@
 		bottom:10vh;
 		position:fixed;
 		z-index:1;
+		overflow: hidden;
 	}
 	.reserve-box>div{
 		width:100%;
@@ -128,18 +129,16 @@
 		border-color:#0f3057;
 	}
 	.reserve-box>form{
-		width:100%;
-		display:block;
+		width:80%;
 		margin:0 auto;
 		padding:20px;
 	}
-	.reserve-box>form input{
+	.reserve-box form input{
 		margin:auto;
 		margin-bottom:10px;
 		width:100%;
-		border-radius: none;
 	}
-	.reserve-box>form span{
+	.reserve-box form span{
 		display: flex;
         align-items: center;
         font-size : 15px;
@@ -349,49 +348,34 @@
 			<div class="div-right">
 				<div class="reserve-box">
 					<div>예약정보</div>
-					<form action="#" method="post" style="">
-						<input type="hidden" value="<%=c.getCarNo()%>">
-	                  	
+					<form>
+							<input type="hidden" value="<%=c.getCarNo()%>">
 	                        
 	                        <div>
 	                           <span id="inputGroup-sizing-default" >시작일</span>
 	                        </div>
-	                           <input type="date" class="form-control" id="rsvStartDate" name="rsvStartDate" onclick="datePick()">
-	                        
-	                        
-	                     
+	                           <input type="date" class="form-control" id="rsvStartDate" name="rsvStartDate" onclick="datePick()">             
 	                           
 	                        <div class="input-group-prepend">
 	                           <span id="inputGroup-sizing-default" >시작 시간</span>
 	                        </div>
 	                           <input type="time" class="form-control" name="rsvStartTime" id="rsvStartTime" value="10:00:00"  >
-	                    
-	                  
-	                     
-	                      
-	                           
+              
 	                        <div class="input-group-prepend">
 	                           <span  id="inputGroup-sizing-default" >종료일</span>
 	                        </div>
 	                           <input type="date" class="form-control" name="rsvEndDate" id="rsvEndDate" onclick="datePick()" >
-	                     
-	               
-	               
-	                  
-	                           
+     
 	                        <div class="input-group-prepend">
 	                           <span id="inputGroup-sizing-default" >종료시간</span>
 	                        </div>
 	                           <input type="time" class="form-control" name="rsvEndTime" id="rsvEndTime" value="19:00:00"  >
-	                    
-	               
-	               
-	                
+
 	                           
 	                        <div class="input-group-prepend">
 	                           <span id="inputGroup-sizing-default" >가격</span>
 	                        </div>
-	                           <input type="text" class="form-control" name="price" id="price" readonly >
+	                            <input type="text" class="form-control" name="price" id="price" readonly >
 	                  			<input type="hidden" id="price_val"> <!-- 가격 정수형 -->
 							<div class="input-group-prepend">
 	                           <input type="submit" value="예약하기">
@@ -570,9 +554,9 @@
 	            console.log("realStime : "+$("#rsvStartTime").val());
 	            hour();
 	         });
-	          hour()
+	         hourPrice()
 	      });
-	function hour(){
+	function hourPrice(){
 		var start = new Date($("#rsvStartDate").val()+" "+$("#rsvStartTime").val());
 		var end = new Date($("#rsvEndDate").val()+" "+$("#rsvEndTime").val());
         var h = Math.floor((end-start)/(1000 * 60 * 60));
