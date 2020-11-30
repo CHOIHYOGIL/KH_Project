@@ -150,12 +150,12 @@ public class CarService {
 		return result;
 	}
 
-	public ArrayList<Car> searchKeyword(String location, String carType,  String carName) {
+	public ArrayList<Car> searchKeyword(String location, String carType,  String carName,String Sdate, String Edate) {
 		
 		Connection conn=JDBCTemplate.getConnection();
 		ArrayList<Car> list=null;
 		
-		list=new CarDao().searchKeyword(conn,location,carType,carName);
+		list=new CarDao().searchKeyword(conn,location,carType,carName,Sdate,Edate);
 		
 		JDBCTemplate.close(conn);
 		return list;

@@ -58,7 +58,7 @@ String location;
 		System.out.println("Edate: "+Edate);
 		
 		System.out.println(zone+' '+addr);
-		ArrayList<Car> list=new CarService().searchKeyword(location,carType,carName);
+		ArrayList<Car> list=new CarService().searchKeyword(location,carType,carName,Sdate,Edate);
 		
 		System.out.println("carkeyword list: "+list);
 

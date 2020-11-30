@@ -270,7 +270,7 @@ public class CarDao {
 	}
 
 	public ArrayList<Car> searchKeyword(Connection conn, String location, String carType, 
-			String carName) {
+			String carName,String Sdate,String Edate) {
 		
 		PreparedStatement pstmt=null;
 		ResultSet rset=null;
@@ -279,7 +279,9 @@ public class CarDao {
 		
 		System.out.println(carName);
 		System.out.println(location);
-		String query="select * from car where CAR_TYPE=? and CAR_NAME=? and CAR_LOCATION LIKE(?) ";
+		System.out.println(Sdate);
+		System.out.println(Edate);
+		String query="select * from car where CAR_TYPE=? and CAR_NAME LIKE(?) and CAR_SDATE>=TO_DATE(?) and CAR_EDATE<=TO_DATE(?) and CAR_LOCATION LIKE(?) ";
 		ArrayList<Car> list=new ArrayList<Car>();
 		
 		try {
@@ -287,8 +289,10 @@ public class CarDao {
 			pstmt.setString(1, carType);
 
 		
-			pstmt.setString(2, carName);
-			pstmt.setString(3, '%'+location+'%');
+			pstmt.setString(2, '%'+carName+"%");
+			pstmt.setString(3, Sdate);
+			pstmt.setString(4, Edate);
+			pstmt.setString(5, '%'+location+'%');
 			rset=pstmt.executeQuery();
 			
 			while(rset.next()) {
@@ -301,6 +305,7 @@ public class CarDao {
 				c.setCarPrice(rset.getString("CAR_PRICE"));
 				c.setCarType(rset.getString("CAR_TYPE"));
 				c.setCarRate(rset.getDouble("CAR_RATE"));
+				c.setCarNo(rset.getInt("car_no"));
 				list.add(c);
 			}
 		} catch (SQLException e) {
