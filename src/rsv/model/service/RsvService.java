@@ -18,7 +18,7 @@ public class RsvService {
 		int numPerPage = 10; // 한페이지당 보여지는 게시물 수
 		int totalPage = totalCount % numPerPage == 0 ? (totalCount / numPerPage) : (totalCount / numPerPage) + 1;
 
-		// int totalPage = 0;
+		// int totalPage = 0;dd
 		// if (totalCount % numPerPage == 0) {
 		// totalPage = totalCount / numPerPage;
 		// } else {
