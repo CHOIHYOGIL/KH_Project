@@ -4,7 +4,6 @@
 	pageEncoding="UTF-8"%>
 <%
 	ArrayList<Car> list = (ArrayList<Car>) request.getAttribute("list");
-	String pageNavi = (String) request.getAttribute("pageNavi");
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -18,14 +17,7 @@
 <style>
 
 /* 소현 */
-#pageNavi>* {
-	margin: 10px;
-}
 
-.selectPage {
-	font-size: 18px;
-	color: blue;
-}
 
 /* 가영 */
 input{
@@ -66,7 +58,6 @@ input{
 	#option-box table tr>*{
 		margin:0;
 		text-align: center;
-		
 	}
 	
 	#option-box table span{
@@ -103,6 +94,13 @@ input{
 	}
 	.carlist a{
 		color:#111;
+		transition-duration: 0.2s;
+	}
+	.carlist a:hover>li>div{
+		box-shadow: -1px -1px 10px #aaa;
+	}
+	.carlist a:hover{
+		color:#008891;
 	}
 	.carlist li{
 		display: block;
@@ -165,23 +163,23 @@ input{
 
         <div id="option-box">
                 <table>
-	                <tr>
+	                <tr style="font-size:17px;">
 		                <th>지역</th>
 		                <th>대여일</th>
 		                <th>차량유형</th>
 		                <th>모델명</th>
 	                </tr>
                     <tr>
-                        <td>
-                            <select style="width : 50px;">
+                        <td style="font-size:15px;">
+                            <select style="width : 80px;font-size:15px;">
                             	<option>지역선택</option>
-                                <option value="서울">서울</option>
-                                <option value="강원">강원</option>
-                                <option value="경기">경기</option>
-                                <option value="대전">대전</option>
-                                <option value="대구">대구</option>
-                                <option value="울산">울산</option>
-                                <option value="부산">부산</option>
+                                <option value="서울">서울시</option>
+                                <option value="강원">강원도</option>
+                                <option value="경기">경기도</option>
+                                <option value="대전">대전시</option>
+                                <option value="대구">대구시</option>
+                                <option value="울산">울산시</option>
+                                <option value="부산">부산시</option>
                             </select>
                             
                             <input type="text" name="addr" required>
@@ -206,20 +204,22 @@ input{
         <div id="sort-box" style="height:70px;">
             <h3 style="display:inline-block;">검색 결과</h3>
 
-            <select>
+            <select style="font-size:13px;">
+            	<option value="recent">최신순</option>
                 <option value="priceAsce">가격순(오름차순)</option>
                 <option value="priceDesc">가격순(내림차순)</option>
-                <option value="priceAsce">평점순</option>
+                <option value="pointAsce">평점순</option>
             </select>
 
         </div>
         <div id="rent-car-list">
             <ul class="carlist">
                 <%for(Car c : list){ %>
-                <a href="/carDetailView?carNo=<%=c.getCarNo() %>">
-                <li class="carList-li">
+                <a href="/carDetailView?carNo=<%=c.getCarNo() %>" >
+                <li class="carList-li" data-point="<%=c.getCarRate() %>" data-price="<%= Integer.parseInt(c.getCarPrice())%>">
 		            <div class="car-img-wrap">
 		                <img src="/img/car/<%=c.getCarImage()%>" style="width:100%;">
+		                <div></div>
 		            </div>
 	                    
                     <div style="text-align: justify;padding:10px;box-sizing: border-box;">
@@ -239,14 +239,7 @@ input{
                 <%} %>
             </ul>
         </div>
-        <div id="carListPage">
-        	<div>
-        		<ul>
-        			<span></span>
-        		</ul>
-        	</div>
-        </div>
-		<div id="pageNavi" style="text-align:center;" ><%=pageNavi%></div>
+
 	</div>
 	</section>
 
@@ -452,8 +445,57 @@ input{
 			
 				})
 	});
-	
-	
+	$(".carlist img").click(function(){
+	var user = <%=u%>;
+		if(user==null){
+			alert("로그인 후 이용해 주세요");
+			return false;
+		}
+	});
+	var recent = $(".carlist").html();
+	$("#sort-box select").change(function(){
+		var dataNm = $(this).val();//data() 의 이름은 소문자로 작성
+		listSort($(this), dataNm);
+	});
+	function listSort($targetObj, dataNm){
+		
+		//정렬하고자 하는 목록에 대해 sort 해서 다시 html로 뿌려주는 부분.
+		if(dataNm=="priceAsce"){
+			$(".carlist").html(
+				$(".carlist a").sort(function(a, b){
+					return  $(a).children().data("price") - $(b).children().data("price");
+		            //만약에 역순으로 정렬하고 싶은 경우 반대로 return하면 됩니다. 
+		            //return $(a).data(dataNm) - $(b).data(dataNm);
+				})
+			);
+		}else if(dataNm=="priceDesc"){
+			$(".carlist").html(
+					$(".carlist a").sort(function(a, b){
+						return $(b).children().data("price") - $(a).children().data("price");
+			           
+					})
+				);	
+		}else if(dataNm=="pointAsce"){
+			$(".carlist").html(
+					$(".carlist a").sort(function(a, b){
+						return $(b).children().data("point") - $(a).children().data("point");
+			           
+					})
+				);	
+		}else{
+			$(".carlist").html(recent);
+			
+		}
+		paging(1);
+	}
+	function paging(page){
+		var a = $(".carlist a");
+		a.hide();
+		console.log(a.length);
+		for(var i=page;i<page*15;i++){
+			$(".carlist a").eq(i).show();
+		}
+	}
 	</script>
 
 </body>

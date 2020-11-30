@@ -12,6 +12,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="/js/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="/css/bootstrap.css">
+<link rel="stylesheet" href="/css/header/style.css">
+<link rel="stylesheet" href="/css/header/responsive.css">
+<script type="text/javascript" src="/js/bootstrap.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=hdnph5ozc8&submodules=geocoder"></script>
 
@@ -129,7 +134,7 @@
 		border-color:#0f3057;
 	}
 	.reserve-box>form{
-		width:80%;
+		width:100%;
 		margin:0 auto;
 		padding:20px;
 	}
@@ -137,6 +142,11 @@
 		margin:auto;
 		margin-bottom:10px;
 		width:100%;
+		outline: none;
+		font-size:15px;
+		font-weight: bold;
+		border : none;
+		border-radius: 2px;
 	}
 	.reserve-box form span{
 		display: flex;
@@ -193,9 +203,6 @@
 	}
 	.div-right{
 		width:0;
-	}
-	{
-		width:100%;
 	}
 	.div-left{
 		width:100%;
@@ -350,7 +357,9 @@
 					<div>예약정보</div>
 					<form>
 							<input type="hidden" value="<%=c.getCarNo()%>">
-	                        
+							<%if(u!=null){ %>
+	                       	 <input type="hidden" value="<%=u.getUserId() %>">
+	                       	 <%} %>
 	                        <div>
 	                           <span id="inputGroup-sizing-default" >시작일</span>
 	                        </div>
@@ -378,7 +387,9 @@
 	                            <input type="text" class="form-control" name="price" id="price" readonly >
 	                  			<input type="hidden" id="price_val"> <!-- 가격 정수형 -->
 							<div class="input-group-prepend">
+								<%if(u!=null){ %>
 	                           <input type="submit" value="예약하기">
+	                           <%} %>
 	                        </div>
 					</form>
 				</div>
@@ -532,7 +543,7 @@
 	            
 	          
 	            console.log(Edate);
-	            hour();
+	            hourPrice();
 	         })
 	           $("#rsvStartTime").change(function(){
 	           Stime=$("#rsvStartTime").val();
@@ -559,11 +570,19 @@
 	function hourPrice(){
 		var start = new Date($("#rsvStartDate").val()+" "+$("#rsvStartTime").val());
 		var end = new Date($("#rsvEndDate").val()+" "+$("#rsvEndTime").val());
+		console.log("end"+end);
+		console.log("start"+start);
         var h = Math.floor((end-start)/(1000 * 60 * 60));
         console.log(h);
         var price = h*parseInt($("[name=carPrice]").html());
-        $("#price").val(price.toLocaleString());
-        $("price_val").val(price);
+        console.log(price);
+        if(price/1!=price){
+        	 $("#price").val(0);
+        }else{
+        	 $("#price").val(price.toLocaleString());
+             $("price_val").val(price);
+        }
+       
 	}
 	</script>
 </body>
