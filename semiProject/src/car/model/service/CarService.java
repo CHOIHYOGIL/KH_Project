@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import car.model.dao.CarDao;
 import car.model.vo.Car;
-import car.model.vo.CarPageData;
 import car.model.vo.Review;
 import common.JDBCTemplate;
 

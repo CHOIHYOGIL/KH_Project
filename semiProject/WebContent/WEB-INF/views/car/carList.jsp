@@ -20,7 +20,27 @@
 
 
 /* 가영 */
-input{
+#page-navi{
+	width:100%;
+	height:30px;
+}
+	#page-navi>div{
+		margin:0 auto;
+		text-align: center;
+		width:50%;
+		height:100%;
+	}
+	.page-num{
+		width:50px;
+		height:30px;
+		color: darkgray;
+		text-align: center;
+		cursor: pointer;
+		margin:10px;
+		font-size: 15px;
+		font-weight: bold;
+	}
+	input{
 		border:1px solid #bbb;
 		border-radius: 2px;
 		outline: none;
@@ -239,8 +259,21 @@ input{
                 <%} %>
             </ul>
         </div>
+		<div id="page-navi">
+			<div>
+			<%if(list.size()%15!=0){ %>
+				<%for(int i=1;i<=list.size()/15+1;i++) {%>
+					<span class="page-num"><%=i %></span>
+				<%} %>
+			<%}else{ %>
+				<%for(int i=1;i<=list.size()/15;i++) {%>
+					<span class="page-num"><%=i %></span>
+				<%} %>
+			<%} %>
+			</div>
+		</div>        
+        
 
-	</div>
 	</section>
 
 	<%@include file="/WEB-INF/views/common/footer.jsp"%>
@@ -455,9 +488,9 @@ input{
 	var recent = $(".carlist").html();
 	$("#sort-box select").change(function(){
 		var dataNm = $(this).val();//data() 의 이름은 소문자로 작성
-		listSort($(this), dataNm);
+		listSort(dataNm,1);
 	});
-	function listSort($targetObj, dataNm){
+	function listSort(dataNm, pg){
 		
 		//정렬하고자 하는 목록에 대해 sort 해서 다시 html로 뿌려주는 부분.
 		if(dataNm=="priceAsce"){
@@ -484,18 +517,30 @@ input{
 				);	
 		}else{
 			$(".carlist").html(recent);
-			
 		}
-		paging(1);
+			paging(pg);
+		
 	}
 	function paging(page){
 		var a = $(".carlist a");
 		a.hide();
+		var s = 1+(15*(page-1));
 		console.log(a.length);
-		for(var i=page;i<page*15;i++){
-			$(".carlist a").eq(i).show();
+		for(var i=s;i<=page*15;i++){
+			$(a).eq(i-1).show();
 		}
 	}
+	
+	$(function(){
+		paging(1);
+		$(".page-num").eq(0).css({color:'white',backgroundColor:"#008891"});
+	})
+	
+	$(".page-num").click(function(){
+		$(".page-num").css({color:'darkgray',backgroundColor:'white'});
+		$(this).css({color:'white',backgroundColor:"#008891"});
+		paging(parseInt($(this).html()));
+	});
 	</script>
 
 </body>

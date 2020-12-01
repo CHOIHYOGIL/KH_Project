@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import car.model.service.CarService;
 import car.model.vo.Car;
-import car.model.vo.CarPageData;
 
 /**
  * Servlet implementation class SearchCarKeywordServlet
@@ -41,7 +40,7 @@ public class SearchCarKeywordServlet extends HttpServlet {
 		String Sdate=request.getParameter("date-range1");
 		String Edate=request.getParameter("date-range2");
 		String carName=request.getParameter("carName");
-String location;
+		String location;
 		if(addr.equals("")) {
 			location=zone;
 		}else {
