@@ -6,8 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import car.model.vo.Review;
 import common.JDBCTemplate;
+import member.model.service.UserService;
+import member.model.vo.User;
 import rsv.model.vo.Rsv;
 
 public class RsvDao {
@@ -200,90 +201,91 @@ public class RsvDao {
 	}
 
 	public int insertCarRsv(Connection conn, Rsv rsv) {
-		
-		PreparedStatement pstmt=null;
-		int result=0;
-		String query="insert into reservation values(?,?,to_char(sysdate,'yyyy-mm-dd'),RESERVATION_SEQ.nextval,?,?,?,?,1,?)";
-		
+
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into reservation values(?,?,to_char(sysdate,'yyyy-mm-dd'),RESERVATION_SEQ.nextval,?,?,?,?,1,?)";
+
 		try {
-			pstmt=conn.prepareStatement(query);
-			pstmt.setInt(1,rsv.getCarNo());
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, rsv.getCarNo());
 			pstmt.setString(2, rsv.getUserId());
 			pstmt.setString(3, rsv.getRsvStart());
 			pstmt.setString(4, rsv.getRsvEnd());
 			pstmt.setString(5, rsv.getRsvStime());
 			pstmt.setString(6, rsv.getRsvEtime());
 			pstmt.setString(7, rsv.getRsvPrice());
-			result=pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
-		
-		
+
 	}
 
-
-
 	public int insertReview(Connection conn, String userId, int carNo, String revCon, int rate, int rsvNo) {
-		PreparedStatement pstmt=null;
-		int result=0;
-		String query="insert into review values(review_seq.nextval,?,?,?,?,to_char(sysdate,'yyyy-mm-dd'),?)";
-		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		String query = "insert into review values(review_seq.nextval,?,?,?,?,to_char(sysdate,'yyyy-mm-dd'),?)";
+
 		try {
-			pstmt=conn.prepareStatement(query);
-			pstmt.setInt(1,carNo);
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, carNo);
 			pstmt.setString(2, userId);
 			pstmt.setString(3, revCon);
 			pstmt.setInt(4, rate);
 			pstmt.setInt(5, rsvNo);
-			result=pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
 	}
 
 	public int insertReport(Connection conn, int rsvNo, String reporter, String reportee, String repCon) {
-		PreparedStatement pstmt=null;
-		int result=0;
-		String query="insert into report values(report_seq.nextval,to_char(sysdate,'yyyy-mm-dd'),?,?,?,?)";
-		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		int i = 1;
+		String query = "insert into report values(report_seq.nextval,to_char(sysdate,'yyyy-mm-dd'),?,?,?,?)";
+
 		try {
-			pstmt=conn.prepareStatement(query);
+			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, reporter);
 			pstmt.setString(2, reportee);
 			pstmt.setString(3, repCon);
 			pstmt.setInt(4, rsvNo);
-			result=pstmt.executeUpdate();
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
 	}
 
 	public int updateReport(Connection conn, String reportee) {
-		PreparedStatement pstmt=null;
-		int result=0;
-		String query="update member set user_report=1 where user_id=?";
-		
+		PreparedStatement pstmt = null;
+		int result = 0;
+		User user = UserService.selectOneMember(reportee);
+		int userReport = user.getUserReport();
+		String query = "update member set user_report=? where user_id=?";
+
 		try {
-			pstmt=conn.prepareStatement(query);
-			pstmt.setString(1, reportee);
-			result=pstmt.executeUpdate();
+			pstmt = conn.prepareStatement(query);
+			pstmt.setInt(1, userReport + 1);
+			pstmt.setString(2, reportee);
+			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}finally {
+		} finally {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
