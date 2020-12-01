@@ -244,7 +244,7 @@ public class CarDao {
 	public int insertCar(Connection conn, Car car) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		String query = "insert into car values(car_seq.nextval,'testIDkh',?,?,?,?,?,?,?,?,0,?,?,?)";
+		String query ="insert into car values(car_seq.nextval,'testID',?,?,?,?,?,?,?,?,?,0,?,?,?)";
 		try {
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, car.getCarName());
@@ -263,7 +263,7 @@ public class CarDao {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
+		}finally{
 			JDBCTemplate.close(pstmt);
 		}
 		return result;

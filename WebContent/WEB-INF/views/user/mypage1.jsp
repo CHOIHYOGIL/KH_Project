@@ -301,10 +301,10 @@ table td {
 					</div>
 
 <!--/////////////////////////////////////////////////////////////////////////////////////////  -->
-					<h2>소현 : 어디로들어갈지몰라서 일단 여기에 추가</h2>
+					<%-- <h2>소현 : 어디로들어갈지몰라서 일단 여기에 추가</h2>
 					<a href="/myRsvList?userId=<%=member.getUserId()%>&reqPage=1">나의 예약</a> <br>
 					<a href="/myCarRsvList?userId=<%=mycar.getUserId()%>&reqPage=1">
-								내 차의 예약 내역 보기</a> 
+								내 차의 예약 내역 보기</a>  --%>
 
 <!--/////////////////////////////////////////////////////////////////////////////////////////  -->
 
@@ -374,106 +374,96 @@ table td {
 							<div class="modal-dialog">
 
 								<form action="/car" method="post" enctype="multipart/form-data">
-									<!-- Modal content-->
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal">&times;</button>
-											<h4 class="modal-title">차량 등록하기</h4>
-										</div>
-										<div class="modal-body">
-
-											<table>
-												<tr>
-													<th>차량 번호</th>
-													<td><input type="text" name="carNopan" id="carNopan"></td>
-												</tr>
-												<tr>
-													<th>연식</th>
-													<td><input type="text" name="carYear" id="carYear"></td>
-												</tr>
-												<tr>
-													<th>크기</th>
-													<td><input type="text" name="carType" id="carType"></td>
-												</tr>
-												<tr>
-													<th>차종</th>
-													<td><input type="text" name="carName" id="carName"></td>
-												</tr>
-												<tr>
-													<th rowspan="2">대여 가능 기간</th>
-													<td><input type="date" name="carSdate" id="carSdate">
-													</td>
-												</tr>
-												<tr>
-													<td><input type="date" name="carEdate" id="carEdate">
-													</td>
-												</tr>
-												<tr>
-													<th>가격
-														<p></p>
-													</th>
-													<td><input type="text" name="carPrice" id="carPrice"></td>
-												</tr>
-												<tr>
-													<th>등록할 위치</th>
-													<td>
-														<ul class="carloc">
-															<li><input id="postCode"
-																style="width: 200px; display: inline-block" type="text"
-																placeholder="우편번호" class="form-control" readonly>
-																<button id="addrSearchBtn" type="button"
-																	onclick="addrSearch();" class="btn btn-primary">주소검색</button>
-															</li>
-															<li><input type="text" id="roadAddr" name="rastyle="
-																width:400px; display:inline-block;" placeholder="도로명주소"
-																class="form-control" readonly> <input
-																type="text" name="jibunAddr" id="jibunAddr"
-																style="width: 400px; display: inline-block;"
-																placeholder="지번주소" class="form-control" readonly>
-															</li>
-															<li><input type="text" name="detailAddr"
-																id="detailAddr"
-																style="width: 400px; display: inline-block;"
-																placeholder="상세주소" class="form-control"></li>
-														</ul>
-													</td>
-												</tr>
-												<tr>
-													<th>차량 사진</th>
-													<td>
-														<table>
-															<tr>
-																<th>정면</th>
-																<td><input type="file" name="filename1"
-																	onchange="loadImg1(this)"></td>
-															</tr>
-															<tr>
-																<th>측면</th>
-																<td><input type="file" name="filename2"
-																	onchange="loadImg2(this)"></td>
-															</tr>
-															<tr>
-																<th>후면</th>
-																<td><input type="file" name="filename3"
-																	onchange="loadImg3(this)"></td>
-															</tr>
-															<tr>
-																<th>내부</th>
-																<td><input type="file" name="filename4"
-																	onchange="loadImg4(this)"></td>
-															</tr>
-														</table>
-													</td>
-												</tr>
-
-											</table>
-										</div>
-										<div class="modal-footer">
-											<button type="submit">넘어가기</button>
-											<!-- <button type="button" class="btn btn-default" data-dismiss="modal" id="carButton">등록하기</button>
-         								 <button type="button" class="btn btn-default" data-dismiss="modal">취소</button> -->
-										</div>
-									</div>
+      							<!-- Modal content--> 
+      							<div class="modal-content">
+        							<div class="modal-header">
+         								<button type="button" class="close" data-dismiss="modal">&times;</button>
+          								<h4 class="modal-title">차량 등록하기</h4>
+       							 	</div>
+        							<div class="modal-body">
+        							
+          								<table>
+          									<tr>
+          										<th>차량 번호</th>
+          										<td><input type="text" name="carNoPan" id="carNoPan"></td>
+          									</tr>
+          									<tr>
+          										<th>연식</th>
+          										<td><input type="text" name="carYear" id="carYear"></td>
+          									</tr>
+          									<tr>
+          										<th>크기</th>
+          										<td><input type="text" name="carType" id="carType"></td>
+          									</tr>
+          									<tr>
+          										<th>차종</th>
+          										<td><input type="text" name="carName" id="carName"></td>
+          									</tr>
+          									<tr>
+          										<th rowspan="2">대여 가능 기간</th>
+          										<td>
+          											<input type="date" name="carSdate" id="carSdate">
+          										</td>
+          									</tr>
+          									<tr>
+          										<td>
+          											<input type="date" name="carEdate" id="carEdate">
+          										</td>
+          									</tr>
+          									<tr>
+          										<th>가격<p></p></th>
+          										<td><input type="text" name="carPrice" id="carPrice"></td>
+          									</tr>
+          									<tr>
+          										<th>등록할 위치</th>
+          										<td>
+          											<ul class="carloc">
+													<li>
+														<input id="postCode" style="width:200px; display:inline-block" type="text" placeholder="우편번호" class="form-control" readonly>
+														<button id="addrSearchBtn" type="button" onclick="addrSearch();" class="btn btn-primary">주소검색</button>
+													</li>
+													<li>
+														<input type="text" name="roadAddr" id="roadAddr" style="width:400px; display:inline-block;" placeholder="도로명주소"class="form-control" readonly>
+														<input type="text" name="jibunAddr" id="jibunAddr" style="width:400px; display:inline-block;" placeholder="지번주소"class="form-control" readonly>
+ 													</li>
+ 													<li>
+ 														<input type="text" name="detailAddr" id="detailAddr" style="width:400px; display:inline-block;" placeholder="상세주소"class="form-control">
+ 													</li>
+													</ul>         										
+          										</td>
+          									</tr>
+          									<tr>
+          										<th>차량 사진</th>
+          										<td>
+          											<table>
+          												<tr>
+          													<th>정면</th>
+          													<td><input type="file" name="filename1" onchange="loadImg1(this)"></td>
+          												</tr>
+          												<tr>
+          													<th>측면</th>
+          													<td><input type="file" name="filename2" onchange="loadImg2(this)"></td>
+          												</tr>
+          												<tr>
+          													<th>후면</th>
+          													<td><input type="file" name="filename3" onchange="loadImg3(this)"></td>
+          												</tr>
+          												<tr>
+          													<th>내부</th>
+          													<td><input type="file" name="filename4" onchange="loadImg4(this)"></td>
+          												</tr>
+          											</table>        											
+          										</td>
+          									</tr>
+          									
+          								</table>
+        							</div>
+        							<div class="modal-footer">
+        								 <!-- <button type="submit">넘어가기</button> -->
+        								 <button type="submit" class="btn btn-default"  id="carButton">등록하기</button>
+         								 <button type="button" class="btn btn-default" >취소</button> 
+        							</div>
+     							 </div>
 								</form>
 							</div>
 						</div>
