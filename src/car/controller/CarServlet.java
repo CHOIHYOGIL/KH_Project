@@ -61,7 +61,6 @@ public class CarServlet extends HttpServlet {
 				car.setCarImage2(mRequest.getFilesystemName("filename2"));
 				car.setCarImage3(mRequest.getFilesystemName("filename3"));
 				car.setCarImage4(mRequest.getFilesystemName("filename4"));
-				System.out.println(mRequest.getParameter("roadAddr")+" "+mRequest.getParameter("detailAddr"));
 				//3.비지니스로직
 				int result = new CarService().insertCar(car);
 				RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");

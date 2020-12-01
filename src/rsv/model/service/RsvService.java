@@ -2,11 +2,12 @@ package rsv.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
-import car.model.vo.Review;
 import common.JDBCTemplate;
-
 import rsv.model.dao.RsvDao;
+import rsv.model.vo.Report;
+import rsv.model.vo.ReportPageData;
 import rsv.model.vo.Rsv;
 import rsv.model.vo.RsvPageData;
 
@@ -194,9 +195,138 @@ public class RsvService {
 		return result;
 	}
 
-	public static int updateReport(String reportee) {
+	public int deleteReportRecord(String num) {
+		 Connection conn=JDBCTemplate.getConnection();
+	      StringTokenizer sT1= new StringTokenizer(num, "/");
+	      
+	      
+	      int result=1;
+	      while(sT1.hasMoreTokens()) {
+	         
+	         int reportNo=Integer.parseInt(sT1.nextToken());
+	         int result1=new RsvDao().deleteReportRecord(conn,reportNo);
+	         if(result1==0) {
+	            result=0;
+	            break;
+	         }
+	      }
+	      if(result>0) {
+	         JDBCTemplate.commit(conn);
+	      }else {
+	         JDBCTemplate.rollback(conn);
+	      }
+	      JDBCTemplate.close(conn);
+	      return result;
+
+	}
+
+	public int reportAllDecision(String num, String id) {
+		//num = "42/43/44"  level="1/2/3";
+        Connection conn=JDBCTemplate.getConnection();
+        StringTokenizer sT1= new StringTokenizer(num, "/");
+        StringTokenizer sT2= new StringTokenizer(id, "/");
+        
+        int result=1;
+        while(sT1.hasMoreTokens()) {
+           String userId=sT2.nextToken();
+           int reportNo = Integer.parseInt(sT1.nextToken());
+           int result1=new RsvDao().reportAllDecision(conn, userId, reportNo);
+           if(result1==0) {
+              result=0;;
+              break;
+           }
+        }
+        if(result>0) {
+           JDBCTemplate.commit(conn);
+        }else {
+           JDBCTemplate.rollback(conn);
+        }
+        JDBCTemplate.close(conn);
+        return result;
+
+	}
+
+	public int deleteReportUser(int no) {
 		Connection conn=JDBCTemplate.getConnection();
-		int result=new RsvDao().updateReport(conn,reportee);
+		int result=new RsvDao().deleteReportUser(conn,no);
+		if(result>0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		JDBCTemplate.close(conn);
+		return result;
+	}
+
+	public ArrayList<Report> selectReportMember() {
+		Connection conn=JDBCTemplate.getConnection();
+		ArrayList<Report> allMember=new RsvDao().selectAllMember(conn);
+		JDBCTemplate.close(conn);
+		return allMember;
+	}
+
+	public ReportPageData selectList(int reqPage) {
+
+		Connection conn=JDBCTemplate.getConnection();
+		RsvDao dao=new RsvDao();
+		
+		int totalCount=dao.totalCount(conn);
+		
+		int numPerPage=10;
+		
+		int totalPage=0;
+		
+		if(totalCount % numPerPage==0) {
+			totalPage=totalCount/numPerPage;
+		}else {
+			totalPage=totalCount/numPerPage+1;
+		}
+		
+		int start = (reqPage-1) * numPerPage+1;
+		int end=reqPage*numPerPage;
+		
+		ArrayList<Report> list=dao.selectList(conn,start,end);
+		
+		int pageNaviSize=10;
+		String pageNavi="";
+		
+		int pageNo=reqPage-2;
+		 if(reqPage < 4) {
+	         pageNo = 1;
+	      }
+	      if(reqPage > 5) {
+	    	  System.out.println("reaPage:"+reqPage);
+	         pageNo = reqPage-2 ;
+	      }
+	      //이전버튼
+	      if(pageNo!=1) {
+	         pageNavi +=  "<a class='btn' href='/adminPage?reqPage="+(pageNo-1)+"'>이전</a>";
+	         
+	      }
+	      //네비 숫자
+	      for(int i=0;i<pageNaviSize;i++) {
+	         if(reqPage == pageNo) {
+	            pageNavi += "<span class='btn btn-danger'>"+pageNo+"</span>";
+	         }else {
+	            pageNavi += "<a class='btn' href='/adminPage?reqPage="+pageNo+"'>"+pageNo+"</a>";            
+	         }
+	         pageNo++;
+	         if(pageNo>totalPage) {
+	            break;
+	         }
+	      }
+	      //다음버튼
+	      if(pageNo <= totalPage) {
+	         pageNavi += "<a class='btn' href='/adminPage?reqPage="+pageNo+"'>다음</a>";
+	      }
+	      ReportPageData rpd = new ReportPageData(list,pageNavi);
+	      JDBCTemplate.close(conn);
+	      return rpd;
+	}
+
+	public int addUserReport(String id) {
+		Connection conn=JDBCTemplate.getConnection();
+		int result=new RsvDao().addUserReport(conn,id);
 		if(result>0) {
 			JDBCTemplate.commit(conn);
 		}else {

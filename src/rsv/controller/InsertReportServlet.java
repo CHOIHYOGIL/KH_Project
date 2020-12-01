@@ -41,10 +41,9 @@ public class InsertReportServlet extends HttpServlet {
 		String repCon = request.getParameter("reportContent");
 
 		int insert = RsvService.insertReport(rsvNo, reporter, reportee, repCon);
-		int report = RsvService.updateReport(reportee);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-		if (insert * report > 0) {
+		if (insert > 0) {
 			request.setAttribute("msg", "신고 완료!");
 			if (who.equals("car")) {
 				request.setAttribute("loc", "/changeRsvStatus?status=70&rsvNo=" + rsvNo);

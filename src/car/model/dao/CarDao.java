@@ -40,41 +40,45 @@ public class CarDao {
 		return result;
 	}
 
-	public ArrayList<Car> selectCarList(Connection conn, int start, int end) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Car> list = new ArrayList<Car>();
+	public ArrayList<Car> selectCarList(Connection conn) {
+	      PreparedStatement pstmt = null;
+	      ResultSet rset = null;
+	      ArrayList<Car> list = new ArrayList<Car>();
 
-		String query = "select * from (select rownum as rnum,n.* from (select * from car order by car_Sdate)n) where rnum between ? and ?";
-		try {
-			pstmt = conn.prepareStatement(query);
-			pstmt.setInt(1, start);
-			pstmt.setInt(2, end);
-			rset = pstmt.executeQuery();
-			while (rset.next()) {
-				Car c = new Car();
-				c.setCarNo(rset.getInt("car_no"));
-				c.setUserId(rset.getString("user_Id"));
-				c.setCarName(rset.getString("car_Name"));
-				c.setCarType(rset.getString("car_type"));
-				c.setCarYear(rset.getInt("car_year"));
-				c.setCarLocation(rset.getString("car_Location"));
-				c.setCarPrice(rset.getString("car_Price"));
-				c.setCarSdate(rset.getString("car_Sdate"));
-				c.setCarEdate(rset.getString("car_Edate"));
-				c.setCarNopan(rset.getString("car_nopan"));
-				c.setCarRate(rset.getDouble("car_rate"));
-				list.add(c);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
-		}
+	      String query = "select * from car where to_date(car_edate) > sysdate order by car_sdate desc";
+	      try {
+	         pstmt = conn.prepareStatement(query);
+	         
+	         rset = pstmt.executeQuery();
+	         while (rset.next()) {
+	            Car c = new Car();
+	            c.setCarEdate(rset.getString("car_edate"));
+	            c.setCarImage(rset.getString("car_image"));
+	            c.setCarImage2(rset.getString("car_image2"));
+	            c.setCarImage3(rset.getString("car_image3"));
+	            c.setCarImage4(rset.getString("car_image4"));
+	            c.setCarLocation(rset.getString("car_location"));
+	            c.setCarName(rset.getString("car_name"));
+	            c.setCarNo(rset.getInt("car_no"));
+	            c.setCarPrice(rset.getString("car_price"));
+	            c.setCarRate(rset.getDouble("car_rate"));
+	            c.setCarSdate(rset.getString("car_sdate"));
+	            c.setCarType(rset.getString("car_type"));
+	            c.setCarYear(rset.getInt("car_year"));
+	            c.setUserId(rset.getString("user_id"));
+	            c.setCarNopan(rset.getString("car_nopan"));
+	            list.add(c);
+	            
+	         }
+	      } catch (SQLException e) {
+	         e.printStackTrace();
+	      } finally {
+	         JDBCTemplate.close(rset);
+	         JDBCTemplate.close(pstmt);
+	      }
 
-		return list;
-	}
+	      return list;
+	   }
 
 	public Car selectOneCar(Connection conn, String userId) {
 		PreparedStatement pstmt = null;
@@ -120,44 +124,7 @@ public class CarDao {
 	//
 	////////////////////////////////////////////////////
 
-	public ArrayList<Car> selectList(Connection conn) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Car> list = new ArrayList<Car>();
-		String query = "select * from car order by car_no desc";
-
-		try {
-			pstmt = conn.prepareStatement(query);
-			rset = pstmt.executeQuery();
-			while (rset.next()) {
-				Car c = new Car();
-				c.setCarEdate(rset.getString("car_edate"));
-				c.setCarImage(rset.getString("car_image"));
-				c.setCarImage2(rset.getString("car_image2"));
-				c.setCarImage3(rset.getString("car_image3"));
-				c.setCarImage4(rset.getString("car_image4"));
-				c.setCarLocation(rset.getString("car_location"));
-				c.setCarName(rset.getString("car_name"));
-				c.setCarNo(rset.getInt("car_no"));
-				c.setCarPrice(rset.getString("car_price"));
-				c.setCarRate(rset.getDouble("car_rate"));
-				c.setCarSdate(rset.getString("car_sdate"));
-				c.setCarType(rset.getString("car_type"));
-				c.setCarYear(rset.getInt("car_year"));
-				c.setUserId(rset.getString("user_id"));
-				c.setCarNopan(rset.getString("car_nopan"));
-				list.add(c);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
-		}
-
-		return list;
-	}
+	
 
 	public Car selectOneCar(Connection conn, int carNo) {
 		PreparedStatement pstmt = null;
@@ -267,6 +234,55 @@ public class CarDao {
 			JDBCTemplate.close(pstmt);
 		}
 		return result;
+	}
+
+	public ArrayList<Car> searchKeyword(Connection conn, String location, String carType, String carName, String sdate,
+			String edate) {
+		PreparedStatement pstmt=null;
+		ResultSet rset=null;
+		System.out.println("111111");
+		System.out.println(carType);
+		
+		System.out.println(carName);
+		System.out.println(location);
+		System.out.println(sdate);
+		System.out.println(edate);
+		String query="select * from car where CAR_TYPE=? and CAR_NAME LIKE(?) and CAR_SDATE>=TO_DATE(?) and CAR_EDATE<=TO_DATE(?) and CAR_LOCATION LIKE(?) ";
+		ArrayList<Car> list=new ArrayList<Car>();
+		
+		try {
+			pstmt=conn.prepareStatement(query);
+			pstmt.setString(1, carType);
+
+		
+			pstmt.setString(2, '%'+carName+"%");
+			pstmt.setString(3, sdate);
+			pstmt.setString(4, edate);
+			pstmt.setString(5, '%'+location+'%');
+			rset=pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Car c=new Car();
+				c.setCarEdate(rset.getString("CAR_EDATE"));
+				c.setCarSdate(rset.getString("CAR_SDATE"));
+				c.setCarName(rset.getString("CAR_NAME"));
+				c.setCarLocation(rset.getString("CAR_LOCATION"));
+				c.setCarPrice(rset.getString("CAR_PRICE"));
+				c.setCarType(rset.getString("CAR_TYPE"));
+				c.setCarRate(rset.getDouble("CAR_RATE"));
+				c.setCarNo(rset.getInt("car_no"));
+				list.add(c);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			JDBCTemplate.close(pstmt);
+			JDBCTemplate.close(rset);
+		}
+		
+		return list;
 	}
 
 	////////////////////////////////////////////////////////////

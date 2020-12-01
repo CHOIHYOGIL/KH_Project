@@ -78,11 +78,9 @@
 				<tr>
 					<th colspan="2" style="text-align:center">
 				<button class="btn btn-outline-danger btn-lg" type="submit">수정하기</button>
-					<%if(member.getUserGrade()==0){%>
+		
 							<button class="btn btn-outline-danger btn-lg" type="button" onclick="location.href='/adminPage?reqPage=1'">회원관리</button>
-					<% }else{%>
-						<button class="btn btn-outline-danger btn-lg" type="button" onclick="location.href='/deleteMember?memberId=<%= member.getUserId()%>'">회원탈퇴</button>	
-					<% } %>
+				<button class="btn btn-outline-danger btn-lg" type="button" onclick="location.href='/reportUser?reqPage=1'">신고관리</button>
 					</th>
 				</tr>
 			</table>

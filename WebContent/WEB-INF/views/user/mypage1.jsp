@@ -301,10 +301,9 @@ table td {
 					</div>
 
 <!--/////////////////////////////////////////////////////////////////////////////////////////  -->
-					<%-- <h2>소현 : 어디로들어갈지몰라서 일단 여기에 추가</h2>
+					<h2>소현 : 어디로들어갈지몰라서 일단 여기에 추가</h2>
 					<a href="/myRsvList?userId=<%=member.getUserId()%>&reqPage=1">나의 예약</a> <br>
-					<a href="/myCarRsvList?userId=<%=mycar.getUserId()%>&reqPage=1">
-								내 차의 예약 내역 보기</a>  --%>
+					<%-- <a href="/myCarRsvList?userId=<%=mycar.getUserId()%>&reqPage=1">내 차의 예약 내역 보기</a> --%>
 
 <!--/////////////////////////////////////////////////////////////////////////////////////////  -->
 
@@ -459,7 +458,6 @@ table td {
           								</table>
         							</div>
         							<div class="modal-footer">
-        								 <!-- <button type="submit">넘어가기</button> -->
         								 <button type="submit" class="btn btn-default"  id="carButton">등록하기</button>
          								 <button type="button" class="btn btn-default" >취소</button> 
         							</div>
@@ -638,7 +636,7 @@ table td {
 		}
 
 		//차량등록하기 클릭시
-		/* $('#carButton').click(function() { 
+		$('#carButton').click(function() { 
 			$('#carinfo1').html($('#carNoPan').val()); //td값
 			$('#carinfo2').html($('#carYear').val()); //td값
 			$('#carinfo3').html($('#carType').val()); //td값
@@ -646,7 +644,7 @@ table td {
 			$('#carinfo5').html($('#carSdate').val()+" - "+$('#carEdate').val()); //td값
 			$('#carinfo6').html($('#carPrice').val()+"원"); //td값
 			$('#carinfo7').html($('#roadAddr').val()+" "+$('#detailAddr').val()); //td값
-		}); */
+		}); 
 		/* console.log($('#carNoPan').val()); //차량번호
 		console.log($('#carYear').val()); //연식
 		console.log($('#carType').val()); //차종

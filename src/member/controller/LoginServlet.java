@@ -9,17 +9,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import member.model.service.UserService;
-
 import member.model.vo.User;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class loginServlet
  */
 @WebServlet(name = "Login", urlPatterns = { "/login" })
 public class LoginServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+   private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -29,50 +27,36 @@ public class LoginServlet extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		//1. 인코딩
-		request.setCharacterEncoding("utf-8");
-		
-		User member=new User();
-		member.setUserId(request.getParameter("userId"));
-		member.setUserPw(request.getParameter("userPw"));
-		
-		
-		User loginMember=new UserService().selectOneMember(member);
-		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
-		if(loginMember != null) {
-			System.out.println(loginMember);
-			System.out.println(loginMember.getUserGrade());
-			if(loginMember.getUserGrade()==2) {
-				request.setAttribute("msg", "준회원은 로그인 권한이 없습니다. 관리자에게 문의하세요");
-			}else {
-				System.out.println("hihi");
-				HttpSession session=request.getSession();
-				session.setAttribute("user", loginMember);
-				request.setAttribute("msg", "로그인 성공");
-			}
-			request.setAttribute("loc", "/");
-			
-		}else {
-			//로그인 실패
-			request.setAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
-			request.setAttribute("loc", "/views/user/login.jsp");
-			
-		}
-		
-		rd.forward(request, response);
-	}
+   /**
+    * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+    */
+   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      request.setCharacterEncoding("utf-8");
+      User user = new User();
+      user.setUserId(request.getParameter("userId"));
+      user.setUserPw(request.getParameter("userPw"));
+      
+      User loginUser = new UserService().selectOneMember(user);
+      
+      RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/common/msg.jsp");
+      if(loginUser != null) {
+         HttpSession session = request.getSession();
+         session.setAttribute("user", loginUser);
+         request.setAttribute("msg", "로그인 성공");
+         request.setAttribute("loc", "/");
+      }else {
+         request.setAttribute("msg", "아이디 또는 비밀번호를 확인하세요");
+         request.setAttribute("loc", "/views/login.jsp");
+      }
+      rd.forward(request, response);
+   }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+   /**
+    * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+    */
+   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      // TODO Auto-generated method stub
+      doGet(request, response);
+   }
 
 }

@@ -1,6 +1,7 @@
 package car.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import car.model.service.CarService;
-import car.model.vo.CarPageData;
+import car.model.vo.Car;
 
 /**
  * Servlet implementation class CarListServlet
@@ -31,27 +32,11 @@ public class CarListServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// 1.�씤肄붾뵫
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
-
-		// 2.view媛� ���옣
-		
-	
-	
-		int reqPage = Integer.parseInt(request.getParameter("reqPage")); // 1�럹�씠吏� �슂泥�
-		System.out.println(reqPage);
-		// 3.鍮꾩��땲�뒪濡쒖쭅
-		CarPageData cpd = new CarService().selectList(reqPage);
-		
-		
-		// 4.寃곌낵泥섎━
+		ArrayList<Car> list = new CarService().selectList();
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/car/carList.jsp");
-		System.out.println("list:"+cpd.getList());
-		System.out.println("pageNavi:"+cpd.getPageNavi());
-		request.setAttribute("list", cpd.getList());
-		request.setAttribute("pageNavi", cpd.getPageNavi());
+		request.setAttribute("list", list);
 		rd.forward(request, response);
 	}
 
